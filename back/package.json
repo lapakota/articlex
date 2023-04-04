@@ -1,5 +1,5 @@
 {
-  "name": "back",
+  "name": "articlex",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -17,7 +17,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config db/typeorm.config.ts",
+    "typeorm:create": "yarn run typeorm migration:create -n",
+    "typeorm:generate": "yarn run typeorm migration:generate -n",
+    "typeorm:run": "yarn run typeorm migration:run",
+    "typeorm:revert": "yarn run typeorm migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -38,7 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.2",
-    "typeorm": "^0.3.12",
+    "typeorm": "0.2.21",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

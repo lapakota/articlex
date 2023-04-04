@@ -1,0 +1,54 @@
+version: '3'
+services: 
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports: 
+      - "5432:5432"
+    container_name: postgres-db
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  nestjs:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    image: articlex/nest-and-postgres-application:latest
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASS=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_SYNC=false
+      - JWT_SECRET=${JWT_SECRET}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - APP_EXPIRES=${APP_EXPIRES}
+      - APP_PORT=${APP_PORT}
+    ports: 
+      - "4200:4200"
+    container_name: nest-articlex
+    depends_on: 
+      - db
+    volumes: 
+      - .:/app
+      - /app/node_modules
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: nest-pgadmin4
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+    ports: 
+      - "8080:80"
+    volumes: 
+      - ./pgadmin-data:/var/lib/pgadmin
+    depends_on: 
+      - db
+volumes:
+  pgdata:
+  pgadmin-data:

@@ -4,14 +4,19 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = +process.env.APP_PORT || 4200;
   app.setGlobalPrefix('api');
+  console.log('Port running on: ', port);
 
-  const config = new DocumentBuilder()
+  const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Articlex')
     .setDescription('The Articlex API description')
     .setVersion('1.0')
+    .addTag('Article')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+
+  const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);
 
   await app.listen(4200);
