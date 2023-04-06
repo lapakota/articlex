@@ -36,7 +36,7 @@ lerna-debug.log*
 
 /pgadmin-data
 /pgdata
-/src/migration
-/db/migration
+/db/migrations/*.ts
+/uploads
 
 .env

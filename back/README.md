@@ -13,9 +13,9 @@ $ yarn install
 ```bash
 $ docker-compose up --build
 
-$ docker-compose run nestjs yarn run typeorm:generate Migration
+$ docker-compose run nestjs yarn run migration:generate db/migrations/MigrationName
 
-$ docker-compose run nestjs yarn run typeorm:run
+$ docker-compose run nestjs yarn run migration:run
 ```
 
 Swagger: localhost:4200/swagger

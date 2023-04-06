@@ -18,11 +18,12 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config db/typeorm.config.ts",
-    "typeorm:create": "yarn run typeorm migration:create -n",
-    "typeorm:generate": "yarn run typeorm migration:generate -n",
-    "typeorm:run": "yarn run typeorm migration:run",
-    "typeorm:revert": "yarn run typeorm migration:revert"
+    "typeorm": "yarn run build && npx typeorm -d dist/db/data-source.js",
+    "migration:create": "yarn typeorm migration:create",
+    "migration:generate": "yarn typeorm migration:generate",
+    "migration:run": "yarn run typeorm migration:run",
+    "migration:revert": "yarn run typeorm migration:revert",
+    "schema:drop": "yarn run typeorm schema:drop"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -32,6 +33,10 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.2.1",
     "@nestjs/typeorm": "^9.0.1",
+    "@types/bcrypt": "^5.0.0",
+    "@types/multer": "^1.4.7",
+    "@types/passport-jwt": "^3.0.8",
+    "@types/uuid": "^9.0.1",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -43,7 +48,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.2",
-    "typeorm": "0.2.21",
+    "typeorm": "0.3.6",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
