@@ -1,0 +1,10 @@
+server:
+  port: 4200
+
+db:
+  type: 'postgres'
+  port: 5432
+  database: 'articlex'
+
+jwt:
+  expiresIn: 3600
