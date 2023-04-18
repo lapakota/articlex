@@ -37,6 +37,7 @@
     "@types/multer": "^1.4.7",
     "@types/passport-jwt": "^3.0.8",
     "@types/uuid": "^9.0.1",
+    "argon2": "^0.30.3",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",

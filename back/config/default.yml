@@ -7,5 +7,5 @@ db:
   database: 'articlex'
 
 jwt:
-  expiresIn: 900
-  refreshExpiresIn: 28800
+  expiresIn: 3600
+  refreshExpiresIn: 604800

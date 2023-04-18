@@ -7,8 +7,8 @@ import {
   Get,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthenticationGuard } from 'src/guards/jwt-authentication.guard';
-import { JwtRefreshTokenGuard } from 'src/guards/jwt-refresh-token.guard';
+import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
+import { JwtRefreshTokenGuard } from 'src/auth/guards/jwt-refresh-token.guard';
 import { GetUser } from './decorator/get-user.decorator';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';

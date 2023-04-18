@@ -16,7 +16,7 @@ import { UserService } from './service/user.service';
 import { diskStorage } from 'multer';
 import { UserInfoDto } from './dto/user-info.dto';
 import { editFileName, imageFileFilter } from 'utils/file-upload.utils';
-import { JwtAuthenticationGuard } from 'src/guards/jwt-authentication.guard';
+import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
 
 @ApiTags('User')
 @ApiBearerAuth()

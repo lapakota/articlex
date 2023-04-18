@@ -14,7 +14,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
 import { User } from 'src/auth/entity/user.entity';
-import { JwtAuthenticationGuard } from 'src/guards/jwt-authentication.guard';
+import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
 import { ArticleDto } from './dto/article.dto';
 import { Article } from './entity/article.entity';
 import { ArticleService } from './service/article.service';

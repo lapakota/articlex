@@ -5,8 +5,7 @@ import { SignupCredentialsDto } from '../dto/signup-credentials.dto';
 import { User } from '../entity/user.entity';
 import { JwtPayload } from '../interface/jwt-payload.interface';
 import { UserRepository } from '../repository/user.repository';
-import * as bcrypt from 'bcrypt';
-
+import * as argon2 from 'argon2';
 import * as config from 'config';
 
 const dbConfig = config.get('jwt');
@@ -63,9 +62,9 @@ export class AuthService {
   async getUserIfRefreshTokenMatches(refreshToken: string, username: string) {
     const user = await this.userRepository.getUserInfoByUsername(username);
 
-    const isRefreshTokenMatching = await bcrypt.compare(
+    const isRefreshTokenMatching = await argon2.verify(
+      user.hashedRefreshToken || '',
       refreshToken,
-      user.hashedRefreshToken,
     );
 
     if (isRefreshTokenMatching) {
@@ -81,7 +80,7 @@ export class AuthService {
     username: string,
   ) {
     if (refreshToken) {
-      refreshToken = await bcrypt.hash(refreshToken, 10);
+      refreshToken = await argon2.hash(refreshToken);
     }
 
     await this.userRepository.update(
