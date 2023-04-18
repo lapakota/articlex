@@ -13,7 +13,6 @@ export class ArticleService {
   }
 
   async createArticle(articleDto: ArticleDto, user: User): Promise<Article> {
-    console.log('articleService: ', this.articleRepository);
     return this.articleRepository.createArticle(articleDto, user);
   }
 

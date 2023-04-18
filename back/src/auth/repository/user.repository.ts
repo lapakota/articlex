@@ -44,9 +44,9 @@ export class UserRepository extends Repository<User> {
     signinCredentialDto: SignInCredentialsDto,
   ): Promise<JwtPayload> {
     const { username, password } = signinCredentialDto;
-    const auth = await this.findOne({ where: { username } });
+    const auth = await this.getUserInfoByUsername(username);
 
-    if (auth && (await auth.validatePassword(password))) {
+    if (auth && (await auth.validatePassword(password, auth.password))) {
       return {
         username: auth.username,
         user_info: auth.user_info,
@@ -58,5 +58,14 @@ export class UserRepository extends Repository<User> {
 
   private async hashPassword(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
+  }
+
+  async getUserInfoByUsername(username: string) {
+    const auth = await this.findOne({ where: { username } });
+    if (auth) {
+      return auth;
+    } else {
+      return null;
+    }
   }
 }
