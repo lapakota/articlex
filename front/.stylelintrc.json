@@ -1,0 +1,12 @@
+{
+    "extends": [
+        "stylelint-config-recommended-scss",
+        "stylelint-config-rational-order",
+        "stylelint-prettier/recommended"
+    ],
+    "plugins": ["stylelint-order"],
+    "rules": {
+        "declaration-block-no-duplicate-properties": true,
+        "selector-pseudo-class-no-unknown": true
+    }
+}

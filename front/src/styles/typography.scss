@@ -1,0 +1,39 @@
+@import 'src/styles/variables';
+
+body,
+html,
+button,
+input,
+textarea {
+    color: $primary-text;
+    font-size: $font-size-base;
+    font-family: 'Segoe UI', 'Helvetica', 'Arial', 'Tahoma', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 50px;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 29px;
+    line-height: 40px;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+}
