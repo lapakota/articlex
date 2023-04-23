@@ -19,7 +19,19 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
 
-        "baseUrl": "src",
+        "baseUrl": ".",
+        "paths": {
+            "src/*": ["./src/*"],
+            "components/*": ["./src/components/*"],
+            "contexts/*": ["./src/contexts/*"],
+            "features/*": ["./src/features/*"],
+            "helpers/*": ["./src/helpers/*"],
+            "hooks/*": ["./src/hooks/*"],
+            "routes/*": ["./src/routes/*"],
+            "styles/*": ["./src/styles/*"],
+            "typings/*": ["./src/typings/*"]
+        },
+
         "types": ["vite/client"]
     },
     "include": ["src"],

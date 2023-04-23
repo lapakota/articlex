@@ -1,0 +1,35 @@
+@import 'src/styles/variables';
+
+.layout {
+    min-height: 100vh;
+
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        .logo {
+            color: $white-text;
+            font-size: $font-size-xxlarge;
+            user-select: none;
+        }
+    }
+
+    .contentWrapper {
+        padding: 0 50px;
+
+        .content {
+            min-height: 380px;
+            margin: 16px 0;
+            padding: 24px;
+        }
+    }
+
+    .footer {
+        text-align: center;
+    }
+}
