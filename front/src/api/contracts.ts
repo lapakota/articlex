@@ -30,7 +30,7 @@ export interface UserInfo {
 }
 
 export interface User {
-    id: number;
+    id: string;
     username: string;
     user_info: UserInfo;
 }
@@ -40,7 +40,7 @@ export interface UpdateUserInfoDto {
 }
 
 export interface Article {
-    id: number;
+    id: string;
     title: string;
     description: string;
     body: string;

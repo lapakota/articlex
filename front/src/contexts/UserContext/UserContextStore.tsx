@@ -2,8 +2,9 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { UserContext } from './UserContext';
 import { api } from 'src/api/api';
 import { User } from 'src/api/contracts';
-import { useNavigate } from 'react-router';
-import { isHttpError } from 'src/helpers/errors';
+import { useNavigate } from 'react-router-dom';
+import { AuthRoute } from 'src/routes';
+import axios from 'axios';
 
 export function UserContextStore(props: PropsWithChildren<any>) {
     const navigate = useNavigate();
@@ -15,9 +16,9 @@ export function UserContextStore(props: PropsWithChildren<any>) {
                 const response = await api.user.getUser();
                 setUser(response.data);
             } catch (e) {
-                if (isHttpError(e) && e.httpStatus === 401) {
-                // TODO throw error in error context
-
+                // TODO throw error in error context and show error page
+                if (axios.isAxiosError(e) && e.response?.status === 401) {
+                    navigate(AuthRoute.baseRoute);
                 }
             }
         }
@@ -25,5 +26,5 @@ export function UserContextStore(props: PropsWithChildren<any>) {
         getUser();
     }, []);
 
-    return <UserContext.Provider value={{ user }}>{props.children}</UserContext.Provider>;
+    return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>;
 }

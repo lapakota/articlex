@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { AuthService } from './services/auth/auth.service';
 import { clearTokens } from './services/auth/auth.helper';
+import { api } from './api';
 
 export const axiosBasic = axios.create({
     baseURL: '/api',
@@ -37,7 +37,7 @@ axiosWithAuth.interceptors.response.use(
             originalRequest._isRetried = true;
 
             try {
-                await AuthService.refreshTokens();
+                await api.auth.refreshTokens();
 
                 return axiosWithAuth.request(originalRequest);
             } catch (err) {

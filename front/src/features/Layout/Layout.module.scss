@@ -17,6 +17,12 @@
             font-size: $font-size-xxlarge;
             user-select: none;
         }
+
+        .username {
+            margin-right: 16px;
+            color: $white-text;
+            user-select: none;
+        }
     }
 
     .contentWrapper {

@@ -1,19 +1,27 @@
 export type UserProfileRouteParams = {
-    userId: string;
+    username: string;
 };
 export class UserProfileRoute {
-    public static readonly baseRoute = '/UserProfile';
-    public static readonly route = '/UserProfile/:userId';
-    public static getHref(userId: string): string {
-        return `/UserProfile/${userId}`;
+    public static readonly baseRoute = '/userProfile/:username';
+    public static readonly route = '/userProfile/:username';
+    public static getHref(username: string): string {
+        return `/userProfile/${username}`;
     }
 }
 
 export class UserSettingsRoute {
-    public static readonly baseRoute = '/Settings';
-    public static readonly route = '/Settings';
+    public static readonly baseRoute = '/settings';
+    public static readonly route = '/settings';
     public static getHref(): string {
-        return '/Settings';
+        return '/settings';
+    }
+}
+
+export class FeedRoute {
+    public static readonly baseRoute = '/deed';
+    public static readonly route = '/feed';
+    public static getHref(): string {
+        return '/feed';
     }
 }
 
