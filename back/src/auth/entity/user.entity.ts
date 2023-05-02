@@ -23,14 +23,14 @@ export class User extends BaseEntity {
   @Exclude()
   public hashedRefreshToken?: string;
 
+  @Column()
+  salt: string;
+
   @Column({ type: 'varchar' })
   username: string;
 
   @Column({ type: 'varchar' })
   password: string;
-
-  @Column()
-  salt: string;
 
   @OneToMany(() => Article, (article) => article.user, { eager: true })
   article: Article[];

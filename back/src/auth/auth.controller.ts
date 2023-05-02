@@ -54,6 +54,7 @@ export class AuthController {
 
     if (user_info) {
       const userInfo = {
+        id: user_info.id,
         username: user_info.username,
         user_info: user_info.user_info,
       };

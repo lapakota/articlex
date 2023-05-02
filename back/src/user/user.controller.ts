@@ -11,12 +11,12 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { GetUser } from '../auth/decorator/get-user.decorator';
 import { User } from '../auth/entity/user.entity';
-import { UserInfoData } from './interface/user-info.interface';
 import { UserService } from './service/user.service';
 import { diskStorage } from 'multer';
 import { UserInfoDto } from './dto/user-info.dto';
 import { editFileName, imageFileFilter } from 'utils/file-upload.utils';
 import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
+import { UserInfoData } from './interface/user-info.interface';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -26,7 +26,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  getUserInfo(@GetUser() user: User): Promise<UserInfoData> {
+  getUser(@GetUser() user: User): Promise<UserInfoData> {
     return this.userService.getUser(user);
   }
 
