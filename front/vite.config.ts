@@ -10,10 +10,14 @@ export default defineConfig({
     },
     server: {
         proxy: {
-          '/api': {
-            target: 'http://localhost:4200',
-            changeOrigin: true,
-          }
-        }
-      }
+            '/api': {
+                target: 'http://localhost:4200/',
+                changeOrigin: true,
+            },
+            '/images': {
+                target: 'http://localhost:4200/',
+                changeOrigin: true,
+            },
+        },
+    },
 });

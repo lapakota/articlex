@@ -12,6 +12,7 @@ import { join } from 'path';
     TypeOrmModule.forRoot(dataSourceOptions),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '../uploads'),
+      serveRoot: '/images',
     }),
     AuthModule,
     ArticleModule,

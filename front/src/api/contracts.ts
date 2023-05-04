@@ -25,8 +25,8 @@ export interface Tokens {
 
 export interface UserInfo {
     id: number;
-    photo: string;
-    modified_photo: string;
+    photo?: string;
+    modified_photo?: string;
 }
 
 export interface User {
@@ -54,5 +54,3 @@ export interface ArticleDto {
     description: string;
     body: string;
 }
-
-

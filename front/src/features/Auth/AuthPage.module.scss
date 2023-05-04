@@ -1,0 +1,35 @@
+@import 'src/styles/variables';
+
+.layout {
+    min-height: 100vh;
+    padding: 64px 64px 0;
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 64px;
+
+        .form {
+            width: 380px;
+            padding: 64px;
+            border: 1px solid $empty-stub-text;
+            border-radius: 32px;
+
+            .formHeader {
+                margin: 0;
+                font-size: $font-size-large;
+                text-align: center;
+            }
+
+            .formFooter {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    .footer {
+        text-align: center;
+    }
+}

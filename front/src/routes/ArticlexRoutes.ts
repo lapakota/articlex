@@ -18,17 +18,20 @@ export class UserSettingsRoute {
 }
 
 export class FeedRoute {
-    public static readonly baseRoute = '/deed';
+    public static readonly baseRoute = '/feed';
     public static readonly route = '/feed';
     public static getHref(): string {
         return '/feed';
     }
 }
 
+export type AuthRouteParams = {
+    authType: 'signin' | 'signup';
+};
 export class AuthRoute {
-    public static readonly baseRoute = '/Auth';
-    public static readonly route = '/Auth';
-    public static getHref(): string {
-        return '/Auth';
+    public static readonly baseRoute = '/auth/:authType';
+    public static readonly route = '/auth/:authType';
+    public static getHref(authType: 'signin' | 'signup'): string {
+        return `/auth/${authType}`;
     }
 }

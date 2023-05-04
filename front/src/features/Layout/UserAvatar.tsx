@@ -6,8 +6,8 @@ import { api } from 'src/api/api';
 import { UserContext } from 'src/contexts/UserContext';
 import { AuthRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import styles from './Layout.module.scss';
+import { getImageLink } from 'src/helpers/images.helper';
 
-// TODO Показывать аватарку пользователя
 export function UserAvatar() {
     const {
         token: { colorBgLayout },
@@ -18,7 +18,7 @@ export function UserAvatar() {
 
     const onLogout = () => {
         api.auth.logout();
-        navigate(AuthRoute.baseRoute);
+        navigate(AuthRoute.getHref('signin'));
     };
 
     const menuItems: MenuProps['items'] = [
@@ -52,7 +52,7 @@ export function UserAvatar() {
                         size='large'
                         icon={<UserOutlined />}
                         style={{ backgroundColor: colorBgLayout, color: '#001529' }}
-                        src={user?.user_info.modified_photo}
+                        src={getImageLink(user?.user_info.modified_photo)}
                     />
                 </Space>
             </div>

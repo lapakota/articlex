@@ -18,7 +18,7 @@ export function UserContextStore(props: PropsWithChildren<any>) {
             } catch (e) {
                 // TODO throw error in error context and show error page
                 if (axios.isAxiosError(e) && e.response?.status === 401) {
-                    navigate(AuthRoute.baseRoute);
+                    navigate(AuthRoute.getHref('signin'));
                 }
             }
         }

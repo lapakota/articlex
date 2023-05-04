@@ -5,16 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { SignInCredentialsDto } from 'src/api/contracts';
 import { UserContext } from 'src/contexts/UserContext';
-import { UserProfileRoute } from 'src/routes';
-
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-};
-
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-};
+import { AuthRoute, UserProfileRoute } from 'src/routes';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { passwordValidationRules, usernameValidationRules } from '../auth.validations';
+import styles from '../AuthPage.module.scss';
 
 export function SignInForm() {
     const [form] = Form.useForm();
@@ -33,17 +27,29 @@ export function SignInForm() {
         }
     };
 
+    const onRedirectToSignUp = () => {
+        navigate(AuthRoute.getHref('signup'));
+    };
+
     return (
-        <Form {...layout} form={form} name='control-hooks' onFinish={onFinish} style={{ maxWidth: 600 }}>
-            <Form.Item name='username' label='Username' rules={[{ required: true }]}>
-                <Input />
+        <Form className={styles.form} layout='vertical' form={form} onFinish={onFinish}>
+            <Form.Item>
+                <h2 className={styles.formHeader}>Sign in</h2>
             </Form.Item>
-            <Form.Item name='password' label='Password' rules={[{ required: true }]}>
-                <Input type='password' />
+            <Form.Item name='username' label='Username' rules={usernameValidationRules}>
+                <Input prefix={<UserOutlined />} />
             </Form.Item>
-            <Form.Item {...tailLayout}>
-                <Button type='primary' htmlType='submit'>
+            <Form.Item name='password' label='Password' hasFeedback rules={passwordValidationRules}>
+                <Input.Password prefix={<LockOutlined />} />
+            </Form.Item>
+            <Form.Item>
+                <Button type='primary' htmlType='submit' style={{ width: '100%' }}>
                     Sign in
+                </Button>
+            </Form.Item>
+            <Form.Item style={{ marginBottom: 0 }} className={styles.formFooter}>
+                <Button type='link' onClick={onRedirectToSignUp}>
+                    Want to create new account?
                 </Button>
             </Form.Item>
         </Form>
