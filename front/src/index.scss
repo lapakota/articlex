@@ -1,4 +1,7 @@
+@import 'src/styles/variables';
+
 body {
+    min-width: $desktop-min-width;
     margin: 0;
     background: #fff;
 }

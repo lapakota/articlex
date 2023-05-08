@@ -1,17 +1,14 @@
-import { UserOutlined, SettingOutlined, ExclamationCircleOutlined, ProfileOutlined } from '@ant-design/icons';
-import { Avatar, Dropdown, MenuProps, Space, Spin, theme } from 'antd';
+import { SettingOutlined, ExclamationCircleOutlined, ProfileOutlined } from '@ant-design/icons';
+import { Dropdown, MenuProps, Spin } from 'antd';
 import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { UserContext } from 'src/contexts/UserContext';
 import { AuthRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import styles from './Layout.module.scss';
-import { getImageLink } from 'src/helpers/images.helper';
+import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
 
-export function UserAvatar() {
-    const {
-        token: { colorBgLayout },
-    } = theme.useToken();
+export function UserDropdown() {
     const { user } = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -47,14 +44,7 @@ export function UserAvatar() {
         <Dropdown menu={{ items: menuItems }} mouseEnterDelay={0}>
             <div style={{ cursor: 'pointer' }}>
                 <span className={styles.username}>{user?.username}</span>
-                <Space wrap size={16}>
-                    <Avatar
-                        size='large'
-                        icon={<UserOutlined />}
-                        style={{ backgroundColor: colorBgLayout, color: '#001529' }}
-                        src={getImageLink(user?.user_info.modified_photo)}
-                    />
-                </Space>
+                <UserAvatar user={user} />
             </div>
         </Dropdown>
     );

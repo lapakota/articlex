@@ -1,33 +1,49 @@
-import { Layout as AntdLayout, Spin, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Layout as AntdLayout, Spin } from 'antd';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Layout.module.scss';
-import { UserAvatar } from './UserAvatar';
+import { UserDropdown } from './UserDropdown';
 import { UserContext } from 'src/contexts/UserContext';
 import { useContext } from 'react';
+import { FeedRoute } from 'src/routes';
+import cn from 'classnames';
 
 const { Header, Content, Footer } = AntdLayout;
 
 export function Layout() {
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { user } = useContext(UserContext);
+
+    const onRedirectToFeedPage = () => navigate(FeedRoute.getHref());
+
+    const isFeedPage = location.pathname === FeedRoute.baseRoute;
 
     return (
         <AntdLayout className={styles.layout}>
             <Header className={styles.header}>
-                <span className={styles.logo}>articlex</span>
-                <UserAvatar />
+                <span className={styles.logo} onClick={onRedirectToFeedPage}>
+                    articlex
+                </span>
+                <UserDropdown />
             </Header>
-            <Content className={styles.contentWrapper}>
-                <div className={styles.content} style={{ background: colorBgContainer }}>
-                    <Spin spinning={!user}>
-                        <Outlet />
-                    </Spin>
+            <Content className={styles.content}>
+                <div className={styles.pageWrapper}>
+                    <div className={cn(styles.page, { [styles.feedPage]: isFeedPage })}>
+                        <Spin spinning={!user}>
+                            <Outlet />
+                        </Spin>
+                    </div>
+                    {isFeedPage && (
+                        <div className={styles.sidePage}>
+                            <Spin spinning={!user}>
+                                <Outlet />
+                            </Spin>
+                        </div>
+                    )}
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>articlex ©2023</Footer>
+            <Footer className={styles.footer}>articlex ©2023</Footer>
         </AntdLayout>
     );
 }

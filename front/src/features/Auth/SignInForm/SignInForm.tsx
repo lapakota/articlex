@@ -1,31 +1,33 @@
 import { Button, Form, Input } from 'antd';
 import axios from 'axios';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
-import { SignInCredentialsDto } from 'src/api/contracts';
-import { UserContext } from 'src/contexts/UserContext';
-import { AuthRoute, UserProfileRoute } from 'src/routes';
+import { SignInCredentialsDto, SignInResponseDto, User } from 'src/api/contracts';
+import { AuthRoute, FeedRoute } from 'src/routes';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { passwordValidationRules, usernameValidationRules } from '../auth.validations';
 import styles from '../AuthPage.module.scss';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { reactQueryHelper } from 'src/api/reactQuery.helper';
 
 export function SignInForm() {
     const [form] = Form.useForm();
 
-    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-    const onFinish = async (values: SignInCredentialsDto) => {
-        try {
-            const response = (await api.auth.signin(values)).data;
-
-            setUser(response.user);
-            navigate(UserProfileRoute.getHref(response.user.username));
-        } catch (error) {
+    const { mutate: onFinish } = useMutation({
+        mutationFn: (request: SignInCredentialsDto) => api.auth.signin(request).then((x) => x.data),
+        onError: (error) => {
             console.log(axios.isAxiosError(error) && error.response?.statusText);
-        }
-    };
+        },
+        onSuccess: (response: SignInResponseDto) => {
+            queryClient.setQueryData<User>(reactQueryHelper.getAuthenticatedUserKey(), () => response.user);
+            queryClient.setQueryData<User>(reactQueryHelper.getUserKey(response.user.username), () => response.user);
+
+            navigate(FeedRoute.getHref());
+        },
+    });
 
     const onRedirectToSignUp = () => {
         navigate(AuthRoute.getHref('signup'));

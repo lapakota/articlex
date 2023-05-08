@@ -28,7 +28,6 @@ export class Article extends BaseEntity {
   @CreateDateColumn({ type: 'timestamp' })
   updatedDate: Date;
 
-  // TODO Скрыть это поле, не убирая из свагера тип юзера
   @ManyToOne(() => User, (user) => user.article, { eager: false })
   user: User;
 

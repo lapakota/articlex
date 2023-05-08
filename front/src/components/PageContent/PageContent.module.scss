@@ -1,0 +1,59 @@
+@import 'src/styles/variables';
+
+$header-shadow: 0 0 $base-size * 2 1px rgba(0, 0, 0, 0.1);
+
+$padding-horizontal: 24px;
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.bodyLoader {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .body {
+        margin: 0 auto;
+        padding-top: $base-size * 2;
+
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+}
+
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -$padding-horizontal;
+    margin-left: -$padding-horizontal;
+
+    padding: $base-size $padding-horizontal;
+    background: $primary-background;
+    border-radius: $base-size * 2;
+
+    h1 {
+        margin: 0;
+        font-size: $font-size-xlarge;
+    }
+}
+
+.backButton {
+    all: unset;
+    position: absolute;
+    left: $base-size * 3;
+    z-index: 1000;
+    font-size: $font-size-large;
+    cursor: pointer;
+}
+
+.footer {
+    align-items: space-between;
+}

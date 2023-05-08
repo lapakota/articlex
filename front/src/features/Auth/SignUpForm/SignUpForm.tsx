@@ -7,6 +7,7 @@ import { AuthRoute } from 'src/routes';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { passwordValidationRules, usernameValidationRules } from '../auth.validations';
 import styles from '../AuthPage.module.scss';
+import { useMutation } from '@tanstack/react-query';
 
 interface SignUpFormState extends SignUpCredentialsDto {
     confirmPassword: string;
@@ -20,20 +21,22 @@ export function SignUpForm() {
         navigate(AuthRoute.getHref('signin'));
     };
 
-    const onFinish = async (values: SignUpFormState) => {
-        try {
+    const { mutate: onFinish } = useMutation({
+        mutationFn: (values: SignUpFormState) => {
             const request: SignUpCredentialsDto = {
                 username: values.username,
                 password: values.password,
             };
 
-            await api.auth.signup(request);
-
-            onRedirectToSignIn();
-        } catch (error) {
+            return api.auth.signup(request).then((x) => x.data);
+        },
+        onError: (error) => {
             console.log(axios.isAxiosError(error) && error.response?.statusText);
-        }
-    };
+        },
+        onSuccess: () => {
+            onRedirectToSignIn();
+        },
+    });
 
     return (
         <Form className={styles.form} layout='vertical' form={form} onFinish={onFinish}>

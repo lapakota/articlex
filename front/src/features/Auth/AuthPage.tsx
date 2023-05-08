@@ -13,7 +13,7 @@ export function AuthPage() {
     return (
         <AntdLayout className={styles.layout}>
             <Content className={styles.content}>{authType === 'signup' ? <SignUpForm /> : <SignInForm />}</Content>
-            <Footer style={{ textAlign: 'center' }}>articlex ©2023</Footer>
+            <Footer className={styles.footer}>articlex ©2023</Footer>
         </AntdLayout>
     );
 }

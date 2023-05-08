@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   UploadedFile,
   UseGuards,
@@ -28,6 +29,11 @@ export class UserController {
   @Get()
   getUser(@GetUser() user: User): Promise<UserInfoData> {
     return this.userService.getUser(user);
+  }
+
+  @Get('/:username')
+  getUserByName(@Param('username') username: string): Promise<UserInfoData> {
+    return this.userService.getUserByName(username);
   }
 
   @Patch()

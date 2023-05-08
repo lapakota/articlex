@@ -31,6 +31,24 @@ export class UserService {
     return userInfo;
   }
 
+  async getUserByName(username: string): Promise<UserInfoData> {
+    const userFull = await this.userRepository.findOne({
+      where: { username: username },
+    });
+
+    if (!userFull) {
+      throw new NotFoundException('User not found.');
+    }
+
+    const userInfo: UserInfoData = {
+      id: userFull.id,
+      username: userFull.username,
+      user_info: userFull.user_info,
+    };
+
+    return userInfo;
+  }
+
   async getUserInfo(user: User): Promise<UserInfo> {
     const userInfo = await this.userInfoRepository.findOne({
       where: { id: user.user_info.id },
