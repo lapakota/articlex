@@ -1,5 +1,4 @@
 import { Button, Form, Input } from 'antd';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { SignInCredentialsDto, SignInResponseDto, User } from 'src/api/contracts';
@@ -9,8 +8,14 @@ import { passwordValidationRules, usernameValidationRules } from '../auth.valida
 import styles from '../AuthPage.module.scss';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { reactQueryHelper } from 'src/api/reactQuery.helper';
+import { MessageInstance } from 'antd/es/message/interface';
+import { getAxiosErrorMessage } from 'src/helpers/errors.helper';
 
-export function SignInForm() {
+interface SignInFromProps {
+    messageApi: MessageInstance;
+}
+
+export function SignInForm({ messageApi }: SignInFromProps) {
     const [form] = Form.useForm();
 
     const navigate = useNavigate();
@@ -19,7 +24,10 @@ export function SignInForm() {
     const { mutate: onFinish } = useMutation({
         mutationFn: (request: SignInCredentialsDto) => api.auth.signin(request).then((x) => x.data),
         onError: (error) => {
-            console.log(axios.isAxiosError(error) && error.response?.statusText);
+            messageApi.open({
+                type: 'error',
+                content: getAxiosErrorMessage(error) || 'Error with signing in, please try again',
+            });
         },
         onSuccess: (response: SignInResponseDto) => {
             queryClient.setQueryData<User>(reactQueryHelper.getAuthenticatedUserKey(), () => response.user);

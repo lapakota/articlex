@@ -9,10 +9,10 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
 import { JwtRefreshTokenGuard } from 'src/auth/guards/jwt-refresh-token.guard';
-import { GetUser } from './decorator/get-user.decorator';
+import { GetUser } from './decorators/get-user.decorator';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
-import { SignupCredentialsDto } from './dto/signup-credentials.dto';
+import { SignUpCredentialsDto } from './dto/signup-credentials.dto';
 import { User } from './entity/user.entity';
 import { JwtPayload } from './interface/jwt-payload.interface';
 import { AuthService } from './service/auth.service';
@@ -24,7 +24,7 @@ export class AuthController {
 
   @Post('/signup')
   signUp(
-    @Body(ValidationPipe) signupCredentialsDto: SignupCredentialsDto,
+    @Body(ValidationPipe) signupCredentialsDto: SignUpCredentialsDto,
   ): Promise<void> {
     return this.authService.signUp(signupCredentialsDto);
   }
@@ -47,16 +47,16 @@ export class AuthController {
   @UseGuards(JwtRefreshTokenGuard)
   @Post('/refresh-tokens')
   async refreshTokens(@GetUser() user: User, @Body() token: RefreshTokenDto) {
-    const user_info = await this.authService.getUserIfRefreshTokenMatches(
+    const fullUser = await this.authService.getUserIfRefreshTokenMatches(
       token.refresh_token,
       user.username,
     );
 
-    if (user_info) {
-      const userInfo = {
-        id: user_info.id,
-        username: user_info.username,
-        user_info: user_info.user_info,
+    if (fullUser) {
+      const userInfo: JwtPayload = {
+        id: fullUser.id,
+        username: fullUser.username,
+        userInfo: fullUser.userInfo,
       };
 
       return this.authService.getNewAccessAndRefreshToken(userInfo);

@@ -5,9 +5,15 @@ export class UserInfo extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  photo: string;
+  @Column({ type: 'varchar' })
+  email: string;
+
+  @Column({ type: 'varchar' })
+  fullName: string;
+
+  @Column({ type: 'varchar' })
+  gender: string;
 
   @Column({ type: 'varchar', nullable: true })
-  modified_photo: string;
+  avatar: string;
 }

@@ -25,7 +25,7 @@ export class UserService {
     const userInfo: UserInfoData = {
       id: userFull.id,
       username: userFull.username,
-      user_info: userFull.user_info,
+      userInfo: userFull.userInfo,
     };
 
     return userInfo;
@@ -43,7 +43,7 @@ export class UserService {
     const userInfo: UserInfoData = {
       id: userFull.id,
       username: userFull.username,
-      user_info: userFull.user_info,
+      userInfo: userFull.userInfo,
     };
 
     return userInfo;
@@ -51,7 +51,7 @@ export class UserService {
 
   async getUserInfo(user: User): Promise<UserInfo> {
     const userInfo = await this.userInfoRepository.findOne({
-      where: { id: user.user_info.id },
+      where: { id: user.userInfo.id },
     });
 
     if (!userInfo) {
@@ -66,8 +66,10 @@ export class UserService {
   ): Promise<UserInfoData> {
     const userInfo = await this.getUserInfo(user);
 
-    userInfo.photo = userInfoDto.photo;
-    userInfo.modified_photo = userInfoDto.modified_photo;
+    userInfo.avatar = userInfoDto.avatar || userInfo.avatar;
+    userInfo.email = userInfoDto.email || userInfo.email;
+    userInfo.fullName = userInfoDto.fullName || userInfo.fullName;
+    userInfo.gender = userInfoDto.gender || userInfo.gender;
 
     await userInfo.save();
 

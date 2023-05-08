@@ -1,6 +1,11 @@
+import { Gender } from 'src/types/gender';
+
 export interface SignUpCredentialsDto {
     username: string;
     password: string;
+    email: string;
+    fullName: string;
+    gender: Gender;
 }
 
 export interface SignInCredentialsDto {
@@ -25,18 +30,23 @@ export interface Tokens {
 
 export interface UserInfo {
     id: number;
-    photo?: string;
-    modified_photo?: string;
+    email: string;
+    fullName: string;
+    gender: Gender;
+    avatar?: string;
 }
 
 export interface User {
     id: string;
     username: string;
-    user_info: UserInfo;
+    userInfo: UserInfo;
 }
 
 export interface UpdateUserInfoDto {
-    photo: File;
+    photo?: File;
+    email?: string;
+    fullName?: string;
+    gender?: Gender;
 }
 
 export interface Article {

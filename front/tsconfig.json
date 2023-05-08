@@ -29,7 +29,7 @@
             "hooks/*": ["./src/hooks/*"],
             "routes/*": ["./src/routes/*"],
             "styles/*": ["./src/styles/*"],
-            "typings/*": ["./src/typings/*"]
+            "typings/*": ["./src/types/*"]
         },
 
         "types": ["vite/client"]

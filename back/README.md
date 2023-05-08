@@ -8,12 +8,6 @@
 $ yarn install
 ```
 
-## Generate front types
-
-```bash
-$ npx swagger-typescript-api --extract-request-params --extract-request-body --extract-response-body --modular --axios --default-response unknown  -p ./swagger-spec.json -o ../front/src/api/generated
-```
-
 ## Running with Docker
 
 ```bash

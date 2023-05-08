@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserInfoDto {
+  // TODO Разобраться как с фронта загрузить файл
   @ApiProperty({
     type: 'file',
     properties: {
@@ -16,5 +17,20 @@ export class UserInfoDto {
   @ApiProperty({
     required: false,
   })
-  modified_photo: string;
+  avatar: string;
+
+  @ApiProperty({
+    required: false,
+  })
+  email: string;
+
+  @ApiProperty({
+    required: false,
+  })
+  fullName: string;
+
+  @ApiProperty({
+    required: false,
+  })
+  gender: string;
 }

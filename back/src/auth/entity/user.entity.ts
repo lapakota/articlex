@@ -37,7 +37,7 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserInfo, { eager: true })
   @JoinColumn()
-  user_info: UserInfo;
+  userInfo: UserInfo;
 
   async validatePassword(
     password: string,

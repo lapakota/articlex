@@ -20,7 +20,7 @@ export function UserAvatar({ user, size }: UserAvatarProps) {
                 size={size || 'large'}
                 icon={<UserOutlined />}
                 style={{ backgroundColor: colorBgLayout, color: '#001529' }}
-                src={getImageLink(user?.user_info.modified_photo)}
+                src={getImageLink(user?.userInfo.avatar)}
             />
         </Space>
     );

@@ -4,7 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { SignupCredentialsDto } from '../dto/signup-credentials.dto';
+import { SignUpCredentialsDto } from '../dto/signup-credentials.dto';
 import { SignInCredentialsDto } from '../dto/signin-credentials.dto';
 import { User } from '../entity/user.entity';
 import { UserInfo } from '../../user/entity/user-info.entity';
@@ -17,7 +17,7 @@ export class UserRepository extends Repository<User> {
     super(User, dataSource.createEntityManager());
   }
 
-  async signUp(signupCredentialsDto: SignupCredentialsDto) {
+  async signUp(signupCredentialsDto: SignUpCredentialsDto) {
     const { username, password } = signupCredentialsDto;
 
     const user = new User();
@@ -27,9 +27,12 @@ export class UserRepository extends Repository<User> {
 
     try {
       const userInfo = new UserInfo();
+      userInfo.email = signupCredentialsDto.email;
+      userInfo.fullName = signupCredentialsDto.fullName;
+      userInfo.gender = signupCredentialsDto.gender;
       await userInfo.save();
 
-      user.user_info = userInfo;
+      user.userInfo = userInfo;
       await user.save();
     } catch (error) {
       if (error.code === '23505') {
@@ -50,7 +53,7 @@ export class UserRepository extends Repository<User> {
       return {
         id: auth.id,
         username: auth.username,
-        user_info: auth.user_info,
+        userInfo: auth.userInfo,
       };
     } else {
       return null;

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MinLength, MaxLength, Matches } from 'class-validator';
+import { EMAIL_REGEXP, PASSWORD_REGEXP } from '../constants/auth.constants';
 
-export class SignupCredentialsDto {
+export class SignUpCredentialsDto {
   @ApiProperty({ minimum: 4, maximum: 20 })
   @IsString()
   @MinLength(4)
@@ -16,9 +17,26 @@ export class SignupCredentialsDto {
   })
   @IsString()
   @MinLength(6)
-  @MaxLength(20)
-  @Matches(/((?=.*\d)|(?=.*\w+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  @MaxLength(35)
+  @Matches(PASSWORD_REGEXP, {
     message: 'Password too weak',
   })
   password: string;
+
+  @ApiProperty({ minimum: 4 })
+  @IsString()
+  @MinLength(4)
+  @Matches(EMAIL_REGEXP, {
+    message: 'Invalid email',
+  })
+  email: string;
+
+  @ApiProperty({ minimum: 4 })
+  @IsString()
+  @MinLength(4)
+  fullName: string;
+
+  @ApiProperty({ minimum: 4 })
+  @IsString()
+  gender: string;
 }

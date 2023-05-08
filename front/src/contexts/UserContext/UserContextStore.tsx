@@ -19,6 +19,7 @@ export function UserContextStore(props: PropsWithChildren<any>) {
             }
         },
         retry: 0,
+        refetchOnWindowFocus: false,
     });
 
     return <UserContext.Provider value={{ user }}>{props.children}</UserContext.Provider>;

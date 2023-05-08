@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { GetUser } from '../auth/decorator/get-user.decorator';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 import { User } from '../auth/entity/user.entity';
 import { UserService } from './service/user.service';
 import { diskStorage } from 'multer';
@@ -58,8 +58,7 @@ export class UserController {
     @GetUser() user: User,
   ): Promise<UserInfoData> {
     if (file) {
-      userInfoDto.photo = file.originalname;
-      userInfoDto.modified_photo = file.filename;
+      userInfoDto.avatar = file.filename;
     }
 
     return this.userService.updateUserProfile(user, userInfoDto);

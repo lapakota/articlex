@@ -1,9 +1,11 @@
 export interface UserInfoData {
   id: number;
   username: string;
-  user_info: {
+  userInfo: {
     id: number;
-    photo: string;
-    modified_photo: string;
+    email: string;
+    fullName: string;
+    gender: string;
+    avatar?: string;
   };
 }

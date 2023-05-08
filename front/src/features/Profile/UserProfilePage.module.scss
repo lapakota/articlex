@@ -1,37 +1,15 @@
 @import 'src/styles/variables';
 
-.layout {
-    min-height: 100vh;
-    padding: 64px 64px 0;
-    background: #fff;
+.userInfo {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-rows: repeat(2, 64px);
+    grid-template-columns: repeat(2, 200px);
+    width: 350px;
+    height: 200px;
+    word-wrap: break-word;
 
-    .content {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-bottom: 64px;
-
-        .form {
-            width: 500px;
-            padding: 64px;
-            border: 1px solid $empty-stub-text;
-            border-radius: 32px;
-
-            .formHeader {
-                margin: 0;
-                font-size: $font-size-large;
-                text-align: center;
-            }
-
-            .formFooter {
-                display: flex;
-                justify-content: center;
-            }
-        }
-    }
-
-    .footer {
-        text-align: center;
-        background: #fff;
+    .caption {
+        color: $secondary-text;
     }
 }

@@ -1,20 +1,32 @@
-import { Button, Form, Input } from 'antd';
-import axios from 'axios';
+import { Button, Form, Input, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { SignUpCredentialsDto } from 'src/api/contracts';
 import { AuthRoute } from 'src/routes';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { passwordValidationRules, usernameValidationRules } from '../auth.validations';
+import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
+import {
+    emailValidationRules,
+    fullNameValidationRules,
+    genderValidationRules,
+    passwordValidationRules,
+    usernameValidationRules,
+} from '../auth.validations';
 import styles from '../AuthPage.module.scss';
 import { useMutation } from '@tanstack/react-query';
+import { MessageInstance } from 'antd/es/message/interface';
+import { getAxiosErrorMessage } from 'src/helpers/errors.helper';
 
 interface SignUpFormState extends SignUpCredentialsDto {
     confirmPassword: string;
 }
 
-export function SignUpForm() {
+interface SignUpFromProps {
+    messageApi: MessageInstance;
+}
+
+export function SignUpForm({ messageApi }: SignUpFromProps) {
     const [form] = Form.useForm();
+
     const navigate = useNavigate();
 
     const onRedirectToSignIn = () => {
@@ -22,18 +34,28 @@ export function SignUpForm() {
     };
 
     const { mutate: onFinish } = useMutation({
-        mutationFn: (values: SignUpFormState) => {
+        mutationFn: (formValues: SignUpFormState) => {
             const request: SignUpCredentialsDto = {
-                username: values.username,
-                password: values.password,
+                username: formValues.username,
+                password: formValues.password,
+                email: formValues.email,
+                fullName: formValues.fullName,
+                gender: formValues.gender,
             };
 
             return api.auth.signup(request).then((x) => x.data);
         },
         onError: (error) => {
-            console.log(axios.isAxiosError(error) && error.response?.statusText);
+            messageApi.open({
+                type: 'error',
+                content: getAxiosErrorMessage(error) || 'Error with registration, please try again',
+            });
         },
         onSuccess: () => {
+            messageApi.open({
+                type: 'success',
+                content: 'Your account was successfully created',
+            });
             onRedirectToSignIn();
         },
     });
@@ -45,6 +67,18 @@ export function SignUpForm() {
             </Form.Item>
             <Form.Item name='username' label='Username' rules={usernameValidationRules}>
                 <Input prefix={<UserOutlined />} />
+            </Form.Item>
+            <Form.Item name='email' label='Email' rules={emailValidationRules}>
+                <Input prefix={<MailOutlined />} />
+            </Form.Item>
+            <Form.Item name='fullName' label='Full name' rules={fullNameValidationRules}>
+                <Input />
+            </Form.Item>
+            <Form.Item name='gender' label='Gender' rules={genderValidationRules}>
+                <Select>
+                    <Select.Option value='male'>Male</Select.Option>
+                    <Select.Option value='female'>Female</Select.Option>
+                </Select>
             </Form.Item>
             <Form.Item name='password' label='Password' hasFeedback rules={passwordValidationRules}>
                 <Input.Password prefix={<LockOutlined />} />
