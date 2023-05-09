@@ -12,20 +12,17 @@ import {
     usernameValidationRules,
 } from 'src/helpers/validations/auth.validations';
 import { useMutation } from '@tanstack/react-query';
-import { MessageInstance } from 'antd/es/message/interface';
 import { getAxiosErrorMessage } from 'src/helpers/errors.helper';
+import { useMessageToast } from 'src/contexts/MessageToastContext';
 import styles from './Forms.module.scss';
 
 interface SignUpFormState extends SignUpCredentialsDto {
     confirmPassword: string;
 }
 
-interface SignUpFromProps {
-    messageApi: MessageInstance;
-}
-
-export function SignUpForm({ messageApi }: SignUpFromProps) {
+export function SignUpForm() {
     const [form] = Form.useForm();
+    const { messageApi } = useMessageToast();
 
     const navigate = useNavigate();
 
@@ -46,13 +43,13 @@ export function SignUpForm({ messageApi }: SignUpFromProps) {
             return api.auth.signup(request).then((x) => x.data);
         },
         onError: (error) => {
-            messageApi.open({
+            messageApi?.open({
                 type: 'error',
                 content: getAxiosErrorMessage(error) || 'Error with registration, please try again',
             });
         },
         onSuccess: () => {
-            messageApi.open({
+            messageApi?.open({
                 type: 'success',
                 content: 'Your account was successfully created',
             });

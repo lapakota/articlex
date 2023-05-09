@@ -1,8 +1,7 @@
-import { Button, Form, Input, Select, Space, message } from 'antd';
+import { Button, Form, Input, Select, Space } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 import { PageContent } from 'src/components/PageContent';
-import { useContext } from 'react';
-import { UserContext } from 'src/contexts/UserContext';
+import { useCurrentUser } from 'src/contexts/UserContext';
 import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateUserInfoDto, User } from 'src/api/contracts';
@@ -13,20 +12,21 @@ import {
     fullNameValidationRules,
     genderValidationRules,
 } from 'src/helpers/validations/auth.validations';
-import styles from './SettingsPage.module.scss';
 import { reactQueryHelper } from 'src/api/reactQuery.helper';
+import { useMessageToast } from 'src/contexts/MessageToastContext';
+import styles from './SettingsPage.module.scss';
 
 export function SettingsPage() {
     const [form] = Form.useForm();
-    const [messageApi, messageContextHolder] = message.useMessage();
+    const { messageApi } = useMessageToast();
     const queryClient = useQueryClient();
 
-    const { user } = useContext(UserContext);
+    const { user } = useCurrentUser();
 
     const { mutate: onFinish } = useMutation({
         mutationFn: (request: UpdateUserInfoDto) => api.user.updateUserInfo(request).then((x) => x.data),
         onError: (error) => {
-            messageApi.open({
+            messageApi?.open({
                 type: 'error',
                 content: getAxiosErrorMessage(error) || 'Error with updating user info, please try again',
             });
@@ -35,7 +35,7 @@ export function SettingsPage() {
             queryClient.setQueryData<User>(reactQueryHelper.getAuthenticatedUserKey(), () => updatedUser);
             queryClient.setQueryData<User>(reactQueryHelper.getUserKey(updatedUser.username), () => updatedUser);
 
-            messageApi.open({
+            messageApi?.open({
                 type: 'success',
                 content: 'User information was successfully updated!',
                 duration: 2,
@@ -55,7 +55,6 @@ export function SettingsPage() {
 
     return (
         <PageContent>
-            {messageContextHolder}
             <PageContent.Header>
                 <h1>Settings</h1>
             </PageContent.Header>
@@ -70,7 +69,7 @@ export function SettingsPage() {
                     >
                         <Form.Item className={styles.avatar}>
                             {/* TODO Сделать загрузку аватарки */}
-                            <UserAvatar user={user} size={128} />
+                            <UserAvatar user={user} size={150} />
                         </Form.Item>
                         <Form.Item name='email' label='Email' rules={emailValidationRules}>
                             <Input prefix={<MailOutlined />} />

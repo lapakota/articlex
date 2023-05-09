@@ -2,8 +2,7 @@ import { Layout as AntdLayout, Spin } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Layout.module.scss';
 import { UserDropdown } from './UserDropdown';
-import { UserContext } from 'src/contexts/UserContext';
-import { useContext } from 'react';
+import { useCurrentUser } from 'src/contexts/UserContext';
 import { FeedRoute } from 'src/routes';
 import cn from 'classnames';
 
@@ -13,7 +12,7 @@ export function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { user } = useContext(UserContext);
+    const { user } = useCurrentUser();
 
     const onRedirectToFeedPage = () => navigate(FeedRoute.getHref());
 

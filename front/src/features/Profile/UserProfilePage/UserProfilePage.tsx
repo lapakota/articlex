@@ -38,9 +38,12 @@ export function UserProfilePage() {
     return (
         <PageContent>
             <PageContent.Header>
-                <UserAvatar user={user} size={128} />
+                <h1>Profile</h1>
             </PageContent.Header>
-            <PageContent.Body spinning={isLoading}>
+            <PageContent.Body spinning={isLoading} className={styles.content}>
+                <div className={styles.avatar}>
+                    <UserAvatar user={user} size={150} />
+                </div>
                 <Space direction='vertical' size={'large'}>
                     <div className={styles.userInfo}>
                         <div>

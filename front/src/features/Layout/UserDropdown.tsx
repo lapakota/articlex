@@ -1,15 +1,14 @@
 import { SettingOutlined, ExclamationCircleOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Spin } from 'antd';
-import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
-import { UserContext } from 'src/contexts/UserContext';
+import { useCurrentUser } from 'src/contexts/UserContext';
 import { AuthRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import styles from './Layout.module.scss';
 import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
 
 export function UserDropdown() {
-    const { user } = useContext(UserContext);
+    const { user } = useCurrentUser();
 
     const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { User } from 'src/api/contracts';
 
 interface UserContextState {
@@ -6,3 +6,5 @@ interface UserContextState {
 }
 
 export const UserContext = createContext<UserContextState>({ user: undefined });
+
+export const useCurrentUser = () => useContext(UserContext);

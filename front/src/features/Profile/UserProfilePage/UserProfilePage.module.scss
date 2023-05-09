@@ -1,15 +1,25 @@
 @import 'src/styles/variables';
 
-.userInfo {
-    display: grid;
-    grid-gap: 16px;
-    grid-template-rows: repeat(2, 64px);
-    grid-template-columns: repeat(2, 200px);
-    width: 350px;
-    height: 200px;
-    word-wrap: break-word;
+.content {
+    width: 100%;
 
-    .caption {
-        color: $secondary-text;
+    .avatar {
+        display: flex;
+        justify-content: center;
+        padding: 32px;
+    }
+
+    .userInfo {
+        display: grid;
+        grid-gap: 16px;
+        grid-template-rows: repeat(2, 64px);
+        grid-template-columns: repeat(2, 200px);
+        width: 350px;
+        height: 200px;
+        word-wrap: break-word;
+
+        .caption {
+            color: $secondary-text;
+        }
     }
 }
