@@ -10,11 +10,11 @@ import {
     genderValidationRules,
     passwordValidationRules,
     usernameValidationRules,
-} from '../auth.validations';
-import styles from '../AuthPage.module.scss';
+} from 'src/helpers/validations/auth.validations';
 import { useMutation } from '@tanstack/react-query';
 import { MessageInstance } from 'antd/es/message/interface';
 import { getAxiosErrorMessage } from 'src/helpers/errors.helper';
+import styles from './Forms.module.scss';
 
 interface SignUpFormState extends SignUpCredentialsDto {
     confirmPassword: string;

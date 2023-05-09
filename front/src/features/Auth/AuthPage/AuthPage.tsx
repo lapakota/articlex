@@ -1,9 +1,8 @@
 import { Layout as AntdLayout, message } from 'antd';
-import { SignInForm } from './SignInForm/SignInForm';
 import styles from './AuthPage.module.scss';
 import { useParams } from 'react-router-dom';
 import { AuthRouteParams } from 'src/routes';
-import { SignUpForm } from './SignUpForm/SignUpForm';
+import { SignInForm, SignUpForm } from '..';
 
 const { Content, Footer } = AntdLayout;
 

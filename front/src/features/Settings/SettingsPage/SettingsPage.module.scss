@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 32px;
+
+    .form {
+        width: 400px;
+
+        .avatar {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+.layout {
+    min-height: 100vh;
+    padding: 64px 64px 0;
+    background: #fff;
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 64px;
+    }
+
+    .footer {
+        text-align: center;
+        background: #fff;
+    }
+}

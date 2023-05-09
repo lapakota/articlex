@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+.form {
+    width: 650px;
+    padding: 64px 128px;
+    border: 1px solid $empty-stub-text;
+    border-radius: 32px;
+
+    .formHeader {
+        margin: 0;
+        font-size: $font-size-large;
+        text-align: center;
+    }
+
+    .formFooter {
+        display: flex;
+        justify-content: center;
+    }
+}

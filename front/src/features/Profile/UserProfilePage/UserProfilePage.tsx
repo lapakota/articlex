@@ -21,6 +21,19 @@ export function UserProfilePage() {
         queryFn: () => api.user.getUserByName(username || '').then((x) => x.data),
     });
 
+    const tabItems = [
+        {
+            label: 'User posts',
+            key: UserProfileTabs.Posts,
+            children: 'User posts',
+        },
+        {
+            label: 'User liked',
+            key: UserProfileTabs.Liked,
+            children: 'User liked',
+        },
+    ];
+
     // TODO отображать статьи пользователя и лайкнутые
     return (
         <PageContent>
@@ -47,21 +60,7 @@ export function UserProfilePage() {
                             <span>{user?.userInfo.gender}</span>
                         </div>
                     </div>
-                    <Tabs
-                        defaultActiveKey={UserProfileTabs.Posts}
-                        items={[
-                            {
-                                label: 'User posts',
-                                key: UserProfileTabs.Posts,
-                                children: 'User posts',
-                            },
-                            {
-                                label: 'User liked',
-                                key: UserProfileTabs.Liked,
-                                children: 'User liked',
-                            },
-                        ]}
-                    />
+                    <Tabs defaultActiveKey={UserProfileTabs.Posts} items={tabItems} />
                 </Space>
             </PageContent.Body>
         </PageContent>

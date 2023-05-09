@@ -1,4 +1,4 @@
-export { AuthPage } from './AuthPage';
+export { AuthPage } from './AuthPage/AuthPage';
 
-export { SignInForm } from './SignInForm/SignInForm';
-export { SignUpForm } from './SignUpForm/SignUpForm';
+export { SignInForm } from './Forms/SignInForm';
+export { SignUpForm } from './Forms/SignUpForm';
