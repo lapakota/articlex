@@ -35,10 +35,6 @@ $side-page-width: 250px;
         padding: 0 $desktop-side-padding;
 
         .pageWrapper {
-            display: flex;
-            flex-direction: row;
-            gap: 32px;
-
             .page {
                 width: $desktop-content-width;
                 min-height: 380px;
@@ -46,18 +42,11 @@ $side-page-width: 250px;
                 padding: 32px;
                 background: #fff;
                 border-radius: 16px;
-
-                &.feedPage {
-                    width: $desktop-content-width - $side-page-width - 32px;
-                }
             }
 
-            .sidePage {
-                width: $side-page-width;
-                margin: 32px 0;
-                padding: 32px;
-                background: #fff;
-                border-radius: 16px;
+            &.feedPage {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

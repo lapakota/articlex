@@ -3,7 +3,7 @@ import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
 const imageFileFilter = (req, file, callback) => {
-  if (!extname(file.originalname).match(/\.(jpg|jpeg|png|gif)$/)) {
+  if (!extname(file.originalname).match(/\.(jpg|jpeg|png)$/)) {
     callback(
       new HttpException('Only image files are allowed', HttpStatus.BAD_REQUEST),
       false,

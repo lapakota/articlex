@@ -1,5 +1,5 @@
-import { UpdateUserInfoDto, User } from '../contracts';
-import axiosWithAuth from '../interceptors';
+import { UpdateUserInfoDto, User } from '../../contracts';
+import axiosWithAuth from '../../interceptors';
 
 export const UserService = {
     async getUser() {

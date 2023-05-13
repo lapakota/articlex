@@ -1,8 +1,7 @@
-import { Button, Form, Input, Select, Space } from 'antd';
-import { MailOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select, Space, Upload, UploadFile } from 'antd';
+import { MailOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContent } from 'src/components/PageContent';
 import { useCurrentUser } from 'src/contexts/UserContext';
-import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateUserInfoDto, User } from 'src/api/contracts';
 import { api } from 'src/api/api';
@@ -23,7 +22,7 @@ export function SettingsPage() {
 
     const { user } = useCurrentUser();
 
-    const { mutate: onFinish } = useMutation({
+    const { mutate: updateUserInfo } = useMutation({
         mutationFn: (request: UpdateUserInfoDto) => api.user.updateUserInfo(request).then((x) => x.data),
         onError: (error) => {
             messageApi?.open({
@@ -43,6 +42,13 @@ export function SettingsPage() {
         },
     });
 
+    const onFinish = (values: Omit<UpdateUserInfoDto, 'avatar'> & { avatar?: UploadFile[] }) => {
+        const avatar = values.avatar ? (values.avatar[0]?.response?.photo as string) : undefined;
+
+        const updateRequest = { ...values, avatar };
+        updateUserInfo(updateRequest);
+    };
+
     const onResetFields = () => {
         form.resetFields();
     };
@@ -58,7 +64,7 @@ export function SettingsPage() {
             <PageContent.Header>
                 <h1>Settings</h1>
             </PageContent.Header>
-            <PageContent.Body spinning={!user} className={styles.content}>
+            <PageContent.Body className={styles.content}>
                 {user && (
                     <Form
                         className={styles.form}
@@ -67,9 +73,25 @@ export function SettingsPage() {
                         onFinish={onFinish}
                         initialValues={defaultFormValue}
                     >
-                        <Form.Item className={styles.avatar}>
-                            {/* TODO Сделать загрузку аватарки */}
-                            <UserAvatar user={user} size={150} />
+                        <Form.Item
+                            className={styles.avatar}
+                            name='avatar'
+                            valuePropName='fileList'
+                            getValueFromEvent={normFile}
+                        >
+                            <Upload
+                                className={styles.avatar}
+                                accept='.png, .jpg, .jpeg'
+                                action='api/photos/upload'
+                                listType='picture-circle'
+                                maxCount={1}
+                                multiple={false}
+                            >
+                                <div>
+                                    <PlusOutlined />
+                                    <div style={{ marginTop: 8, fontSize: 12 }}>Add new avatar</div>
+                                </div>
+                            </Upload>
                         </Form.Item>
                         <Form.Item name='email' label='Email' rules={emailValidationRules}>
                             <Input prefix={<MailOutlined />} />
@@ -89,7 +111,7 @@ export function SettingsPage() {
                                     Save
                                 </Button>
                                 <Button htmlType='button' onClick={onResetFields} style={{ width: 80 }}>
-                                    Cancel
+                                    Reset
                                 </Button>
                             </Space>
                         </Form.Item>
@@ -99,3 +121,10 @@ export function SettingsPage() {
         </PageContent>
     );
 }
+
+const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+        return e;
+    }
+    return e?.fileList;
+};

@@ -1,7 +1,9 @@
 import { AuthService } from './services/auth/auth.service';
-import { UserService } from './services/user.service';
+import { PhotosService } from './services/photos/photos.service';
+import { UserService } from './services/user/user.service';
 
 export const api = {
     auth: AuthService,
     user: UserService,
+    photos: PhotosService,
 };

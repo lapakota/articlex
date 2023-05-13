@@ -20,7 +20,10 @@ async function bootstrap() {
 
   SwaggerModule.setup('swagger', app, document);
 
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+  });
 
   await app.listen(4200);
 }

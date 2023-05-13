@@ -43,10 +43,10 @@ export interface User {
 }
 
 export interface UpdateUserInfoDto {
-    photo?: File;
-    email: string;
-    fullName: string;
-    gender: Gender;
+    avatar?: string;
+    email?: string;
+    fullName?: string;
+    gender?: Gender;
 }
 
 export interface Article {
@@ -63,4 +63,9 @@ export interface ArticleDto {
     title: string;
     description: string;
     body: string;
+}
+
+export interface UploadedPhoto {
+    originalName: string;
+    photo: string;
 }

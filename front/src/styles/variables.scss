@@ -1,8 +1,8 @@
 $base-size: 8px;
 
 $desktop-side-padding: 64px;
-$desktop-min-width: 1264px;
-$desktop-content-width: 1136px;
+$desktop-content-width: 860px;
+$desktop-min-width: $desktop-content-width + $desktop-side-padding * 2;
 
 // ============== COLORS ==============
 

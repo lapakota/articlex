@@ -5,6 +5,7 @@ import { ContextStores } from './contexts';
 import { AuthPage } from './features/Auth';
 import { UserProfilePage } from './features/Profile';
 import { SettingsPage } from './features/Settings';
+import { FeedPage } from './features/Feed';
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
                 <Routes>
                     <Route path={RootRoute} element={<Layout />}>
                         <Route path={RootRoute} element={<Navigate to={FeedRoute.baseRoute} />} />
-                        <Route path={FeedRoute.baseRoute} element={<div>feed here</div>} />
+                        <Route path={FeedRoute.baseRoute} element={<FeedPage />} />
                         <Route path={UserProfileRoute.baseRoute} element={<UserProfilePage />} />
                         <Route path={UserSettingsRoute.baseRoute} element={<SettingsPage />} />
                     </Route>

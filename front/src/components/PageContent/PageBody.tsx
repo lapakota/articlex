@@ -10,7 +10,7 @@ interface PageBodyProps extends SpinProps {
 
 export function PageBody({ className, style, children, ...spinProps }: PropsWithChildren<PageBodyProps>) {
     return (
-        <Spin size='large' delay={200} {...spinProps} className={styles.bodyLoader}>
+        <Spin size='large' delay={200} spinning={false} {...spinProps} className={styles.bodyLoader}>
             <div style={style} className={cn(className, styles.body)} data-tid='PageBody'>
                 {children}
             </div>

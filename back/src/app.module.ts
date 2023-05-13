@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/data-source';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { join } from 'path';
     AuthModule,
     ArticleModule,
     UserModule,
+    PhotosModule,
   ],
 })
 export class AppModule {}

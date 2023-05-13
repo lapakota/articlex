@@ -9,17 +9,22 @@
         padding: 32px;
     }
 
-    .userInfo {
-        display: grid;
-        grid-gap: 16px;
-        grid-template-rows: repeat(2, 64px);
-        grid-template-columns: repeat(2, 200px);
-        width: 350px;
-        height: 200px;
-        word-wrap: break-word;
+    .userInfoWrapper {
+        display: flex;
+        justify-content: space-between;
 
-        .caption {
-            color: $secondary-text;
+        .userInfo {
+            display: grid;
+            grid-gap: 16px;
+            grid-template-rows: repeat(2, 64px);
+            grid-template-columns: repeat(3, 200px);
+            width: 350px;
+            height: 200px;
+            word-wrap: break-word;
+
+            .caption {
+                color: $secondary-text;
+            }
         }
     }
 }

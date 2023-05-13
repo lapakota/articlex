@@ -1,9 +1,9 @@
-import { SettingOutlined, ExclamationCircleOutlined, ProfileOutlined } from '@ant-design/icons';
+import { SettingOutlined, ExclamationCircleOutlined, ProfileOutlined, BookOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Spin } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { useCurrentUser } from 'src/contexts/UserContext';
-import { AuthRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
+import { AuthRoute, FeedRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import styles from './Layout.module.scss';
 import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
 
@@ -18,6 +18,11 @@ export function UserDropdown() {
     };
 
     const menuItems: MenuProps['items'] = [
+        {
+            key: 'feed',
+            label: <NavLink to={FeedRoute.getHref()}>Feed</NavLink>,
+            icon: <BookOutlined size={32} />,
+        },
         {
             key: 'profile',
             label: <NavLink to={UserProfileRoute.getHref(user?.username || '')}>Profile</NavLink>,
