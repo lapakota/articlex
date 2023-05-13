@@ -1,8 +1,16 @@
 import { PageContent } from 'src/components/PageContent';
-import { ArticleEditorModal } from 'src/features/Article';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { ArticleEditorRoute } from 'src/routes';
 import styles from './FeedPage.module.scss';
 
 export function FeedPage() {
+    const navigate = useNavigate();
+
+    const onRedirectToArticleEditor = () => {
+        navigate(ArticleEditorRoute.getHref(undefined));
+    };
+
     return (
         <PageContent>
             <PageContent.Header>
@@ -10,7 +18,9 @@ export function FeedPage() {
             </PageContent.Header>
             <PageContent.Body className={styles.content}>
                 feed here
-                <ArticleEditorModal />
+                <Button type='primary' onClick={onRedirectToArticleEditor}>
+                    Write new article
+                </Button>
             </PageContent.Body>
         </PageContent>
     );
