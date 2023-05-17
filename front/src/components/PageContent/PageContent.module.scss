@@ -50,7 +50,8 @@ $padding-horizontal: 24px;
     position: absolute;
     left: $base-size * 3;
     z-index: 1000;
-    font-size: $font-size-large;
+    color: #1677ff;
+    font-size: $font-size-base;
     cursor: pointer;
 }
 

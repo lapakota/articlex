@@ -14,6 +14,9 @@ export class Article extends BaseEntity {
   id: number;
 
   @Column({ type: 'varchar' })
+  cover: string;
+
+  @Column({ type: 'varchar' })
   title: string;
 
   @Column()
@@ -31,6 +34,6 @@ export class Article extends BaseEntity {
   @ManyToOne(() => User, (user) => user.article, { eager: false })
   user: User;
 
-  @Column({ type: 'int' })
-  userId: number;
+  @Column({ type: 'varchar' })
+  creator: string;
 }

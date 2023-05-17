@@ -1,15 +1,19 @@
-import { PropsWithChildren, useCallback, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import cn from 'classnames';
 import styles from './PageContent.module.scss';
 
 interface PageHeaderProps {
-    onBack?: () => void;
+    withBackButton?: boolean;
     scrollToHeader?: boolean;
 }
 
-export function PageHeader({ onBack, scrollToHeader = true, children }: PropsWithChildren<PageHeaderProps>) {
+export function PageHeader({
+    withBackButton = false,
+    scrollToHeader = true,
+    children,
+}: PropsWithChildren<PageHeaderProps>) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,21 +22,17 @@ export function PageHeader({ onBack, scrollToHeader = true, children }: PropsWit
         }
     }, [scrollToHeader]);
 
-    const handleGoBack = useCallback(() => {
-        if (onBack) {
-            try {
-                navigate(-1);
-            } catch (e) {
-                onBack();
-            }
+    const handleGoBack = () => {
+        if (withBackButton) {
+            navigate(-1);
         }
-    }, [onBack, navigate]);
+    };
 
     return (
         <div className={cn(styles.header)}>
-            {onBack && (
+            {withBackButton && (
                 <button className={styles.backButton} onClick={handleGoBack} data-tid='BackButton'>
-                    <ArrowLeftOutlined /> Назад
+                    <ArrowLeftOutlined /> Back
                 </button>
             )}
             {children}

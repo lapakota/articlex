@@ -14,14 +14,13 @@ export function FeedPage() {
     return (
         <PageContent>
             <PageContent.Header>
-                <h1>Feed</h1>
+                <div className={styles.headerWrapper}>
+                    <Button type='primary' onClick={onRedirectToArticleEditor}>
+                        Write new article
+                    </Button>
+                </div>
             </PageContent.Header>
-            <PageContent.Body className={styles.content}>
-                feed here
-                <Button type='primary' onClick={onRedirectToArticleEditor}>
-                    Write new article
-                </Button>
-            </PageContent.Body>
+            <PageContent.Body className={styles.content}>feed here</PageContent.Body>
         </PageContent>
     );
 }

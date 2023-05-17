@@ -1,4 +1,5 @@
-import { Gender } from 'src/types/gender';
+import { ArticleBody } from 'src/types/ArticleBody';
+import { Gender } from 'src/types/Gender';
 
 export interface SignUpCredentialsDto {
     username: string;
@@ -51,18 +52,20 @@ export interface UpdateUserInfoDto {
 
 export interface Article {
     id: string;
+    cover: string;
     title: string;
     description: string;
-    body: string;
+    body: ArticleBody;
     createdDate: string;
     updatedDate: string;
-    userId: number;
+    creator: string;
 }
 
 export interface ArticleDto {
+    cover: string;
     title: string;
     description: string;
-    body: string;
+    body: ArticleBody;
 }
 
 export interface UploadedPhoto {

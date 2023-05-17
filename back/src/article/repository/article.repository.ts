@@ -11,13 +11,15 @@ export class ArticleRepository extends Repository<Article> {
   }
 
   async createArticle(articleDto: ArticleDto, user: User): Promise<Article> {
-    const { title, description, body } = articleDto;
+    const { cover, title, description, body } = articleDto;
 
     const article = new Article();
 
+    article.cover = cover;
     article.title = title;
     article.description = description;
     article.body = body;
+    article.creator = user.username;
     article.user = user;
 
     await article.save();
@@ -26,10 +28,10 @@ export class ArticleRepository extends Repository<Article> {
     return article;
   }
 
-  async getAllArticles(user: User): Promise<Article[]> {
+  async getUserArticles(user: User): Promise<Article[]> {
     const query = this.createQueryBuilder('article');
 
-    query.where('article.userId = :userId', { userId: user.id });
+    query.where('article.creator = :username', { username: user.username });
 
     const articles = await query.getMany();
     return articles;

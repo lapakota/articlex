@@ -26,8 +26,8 @@ import { ArticleService } from './service/article.service';
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
-  @Get('my')
-  getAllArticles(@GetUser() user: User): Promise<Article[]> {
+  @Get('/my/list')
+  getMyArticles(@GetUser() user: User): Promise<Article[]> {
     return this.articleService.getAllArticles(user);
   }
 
@@ -41,11 +41,15 @@ export class ArticleController {
   }
 
   @Get('/:id')
-  getArticleById(
-    @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User,
-  ): Promise<Article> {
-    return this.articleService.getArticleById(id, user);
+  getArticleById(@Param('id', ParseIntPipe) id: number): Promise<Article> {
+    return this.articleService.getArticleById(id);
+  }
+
+  @Get('/:username/list')
+  getArticlesByUsername(
+    @Param('username') username: string,
+  ): Promise<Article[]> {
+    return this.articleService.getArticlesByUsername(username);
   }
 
   @Patch('/:id')

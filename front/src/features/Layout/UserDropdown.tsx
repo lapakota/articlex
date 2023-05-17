@@ -5,7 +5,7 @@ import { api } from 'src/api/api';
 import { useCurrentUser } from 'src/contexts/UserContext';
 import { AuthRoute, FeedRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import styles from './Layout.module.scss';
-import { UserAvatar } from 'src/components/UserAvatar/UserAvatar';
+import { UserAvatar } from 'src/components/User/UserAvatar';
 
 export function UserDropdown() {
     const { user } = useCurrentUser();

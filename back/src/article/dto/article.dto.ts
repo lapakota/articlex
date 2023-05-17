@@ -2,22 +2,25 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MaxLength, MinLength } from 'class-validator';
 
 export class ArticleDto {
+  @IsString()
+  cover: string;
+
   @ApiProperty({
     minimum: 4,
-    maximum: 30,
+    maximum: 100,
   })
   @IsString()
   @MinLength(4)
-  @MaxLength(30)
+  @MaxLength(100)
   title: string;
 
   @ApiProperty({
     minimum: 4,
-    maximum: 150,
+    maximum: 400,
   })
   @IsString()
   @MinLength(4)
-  @MaxLength(150)
+  @MaxLength(400)
   description: string;
 
   @ApiProperty()

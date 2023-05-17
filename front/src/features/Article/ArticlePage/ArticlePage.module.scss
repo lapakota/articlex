@@ -5,4 +5,10 @@
     flex-direction: column;
     align-items: center;
     padding-top: 32px;
+
+    .description {
+        width: 650px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid $gray-border;
+    }
 }

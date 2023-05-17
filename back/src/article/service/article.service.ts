@@ -9,16 +9,16 @@ export class ArticleService {
   constructor(private articleRepository: ArticleRepository) {}
 
   async getAllArticles(user: User): Promise<Article[]> {
-    return this.articleRepository.getAllArticles(user);
+    return this.articleRepository.getUserArticles(user);
   }
 
   async createArticle(articleDto: ArticleDto, user: User): Promise<Article> {
     return this.articleRepository.createArticle(articleDto, user);
   }
 
-  async getArticleById(id: number, user: User): Promise<Article> {
+  async getUserArticleById(id: number, user: User): Promise<Article> {
     const article = await this.articleRepository.findOne({
-      where: { id, userId: user.id },
+      where: { id, creator: user.username },
     });
 
     if (!article) {
@@ -27,8 +27,30 @@ export class ArticleService {
     return article;
   }
 
+  async getArticleById(id: number): Promise<Article> {
+    const article = await this.articleRepository.findOne({
+      where: { id },
+    });
+
+    if (!article) {
+      throw new NotFoundException(`Article with id ${id} is not found`);
+    }
+    return article;
+  }
+
+  async getArticlesByUsername(username: string): Promise<Article[]> {
+    const articles = await this.articleRepository.find({
+      where: { creator: username },
+    });
+
+    if (!articles) {
+      throw new NotFoundException(`No articles for username ${username}`);
+    }
+    return articles;
+  }
+
   async updateArticleById(id: number, articleDto: ArticleDto, user: User) {
-    const article = await this.getArticleById(id, user);
+    const article = await this.getUserArticleById(id, user);
     article.title = articleDto.title;
     article.description = articleDto.description;
     article.body = articleDto.body;
@@ -40,7 +62,7 @@ export class ArticleService {
   async deleteArticleById(id: number, user: User): Promise<void> {
     const article = await this.articleRepository.delete({
       id,
-      userId: user.id,
+      creator: user.username,
     });
 
     if (article.affected === 0) {

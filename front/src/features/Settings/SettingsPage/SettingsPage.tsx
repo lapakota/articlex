@@ -13,10 +13,15 @@ import {
 } from 'src/helpers/validations/auth.validations';
 import { reactQueryHelper } from 'src/api/reactQuery.helper';
 import { useMessageToast } from 'src/contexts/MessageToastContext';
+import { normFile } from 'src/helpers/files.helper';
 import styles from './SettingsPage.module.scss';
+
+type FormState = Omit<UpdateUserInfoDto, 'avatar'> & { avatar?: UploadFile[] };
 
 export function SettingsPage() {
     const [form] = Form.useForm();
+    const avatarValue: any[] = Form.useWatch('avatar', form);
+
     const { messageApi } = useMessageToast();
     const queryClient = useQueryClient();
 
@@ -42,7 +47,7 @@ export function SettingsPage() {
         },
     });
 
-    const onFinish = (values: Omit<UpdateUserInfoDto, 'avatar'> & { avatar?: UploadFile[] }) => {
+    const onFinish = (values: FormState) => {
         const avatar = values.avatar ? (values.avatar[0]?.response?.photo as string) : undefined;
 
         const updateRequest = { ...values, avatar };
@@ -61,7 +66,7 @@ export function SettingsPage() {
 
     return (
         <PageContent>
-            <PageContent.Header>
+            <PageContent.Header withBackButton>
                 <h1>Settings</h1>
             </PageContent.Header>
             <PageContent.Body className={styles.content}>
@@ -78,19 +83,22 @@ export function SettingsPage() {
                             name='avatar'
                             valuePropName='fileList'
                             getValueFromEvent={normFile}
+                            shouldUpdate
                         >
                             <Upload
                                 className={styles.avatar}
                                 accept='.png, .jpg, .jpeg'
-                                action='api/photos/upload'
+                                action='/api/photos/upload'
                                 listType='picture-circle'
                                 maxCount={1}
                                 multiple={false}
                             >
-                                <div>
-                                    <PlusOutlined />
-                                    <div style={{ marginTop: 8, fontSize: 12 }}>Add new avatar</div>
-                                </div>
+                                {(!avatarValue || !avatarValue.length) && (
+                                    <div>
+                                        <PlusOutlined />
+                                        <div style={{ marginTop: 8, fontSize: 12 }}>Add new avatar</div>
+                                    </div>
+                                )}
                             </Upload>
                         </Form.Item>
                         <Form.Item name='email' label='Email' rules={emailValidationRules}>
@@ -121,10 +129,3 @@ export function SettingsPage() {
         </PageContent>
     );
 }
-
-const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e?.fileList;
-};
