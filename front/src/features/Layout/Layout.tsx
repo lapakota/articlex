@@ -1,11 +1,12 @@
 import { Layout as AntdLayout, Spin } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import styles from './Layout.module.scss';
 import { UserDropdown } from './UserDropdown';
 import { useCurrentUser } from 'src/contexts/UserContext';
 import { FeedRoute } from 'src/routes';
-import cn from 'classnames';
 import { FeedFilters } from '../Feed/FeedFilters';
+import { ArticlexLogo } from './ArticlexLogo';
+import cn from 'classnames';
+import styles from './Layout.module.scss';
 
 const { Header, Content, Footer } = AntdLayout;
 
@@ -23,7 +24,7 @@ export function Layout() {
         <AntdLayout className={styles.layout}>
             <Header className={styles.header}>
                 <span className={styles.logo} onClick={onRedirectToFeedPage}>
-                    articlex
+                    <ArticlexLogo />
                 </span>
                 <UserDropdown />
             </Header>
