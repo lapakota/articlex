@@ -7,4 +7,4 @@ interface UserContextState {
 
 export const UserContext = createContext<UserContextState>({ user: undefined });
 
-export const useCurrentUser = () => useContext(UserContext);
+export const useAuthenticatedUser = () => useContext(UserContext);

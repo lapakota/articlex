@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -17,6 +18,8 @@ import { User } from 'src/auth/entity/user.entity';
 import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
 import { ArticleDto } from './dto/article.dto';
 import { Article } from './entity/article.entity';
+import { ArticlesSearchParams } from './interface/articles-search-request';
+import { ArticlesSearchResponse } from './interface/articles-search-response';
 import { ArticleService } from './service/article.service';
 
 @ApiTags('Article')
@@ -25,11 +28,6 @@ import { ArticleService } from './service/article.service';
 @UseGuards(JwtAuthenticationGuard)
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
-
-  @Get('/my/list')
-  getMyArticles(@GetUser() user: User): Promise<Article[]> {
-    return this.articleService.getAllArticles(user);
-  }
 
   @Post()
   @UsePipes(ValidationPipe)
@@ -48,8 +46,9 @@ export class ArticleController {
   @Get('/:username/list')
   getArticlesByUsername(
     @Param('username') username: string,
-  ): Promise<Article[]> {
-    return this.articleService.getArticlesByUsername(username);
+    @Query() searchParams: ArticlesSearchParams,
+  ): Promise<ArticlesSearchResponse> {
+    return this.articleService.getArticlesByUsername(username, searchParams);
   }
 
   @Patch('/:id')

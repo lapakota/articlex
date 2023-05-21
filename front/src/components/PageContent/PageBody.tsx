@@ -1,19 +1,23 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import cn from 'classnames';
 import styles from './PageContent.module.scss';
-import { Spin, SpinProps } from 'antd';
+import { Skeleton, SkeletonProps } from 'antd';
 
-interface PageBodyProps extends SpinProps {
+interface PageBodyProps extends SkeletonProps {
     className?: string;
     style?: CSSProperties;
 }
 
-export function PageBody({ className, style, children, ...spinProps }: PropsWithChildren<PageBodyProps>) {
+export function PageBody({ className, style, children, ...skeletonProps }: PropsWithChildren<PageBodyProps>) {
     return (
-        <Spin size='large' delay={200} spinning={false} {...spinProps} className={styles.bodyLoader}>
-            <div style={style} className={cn(className, styles.body)} data-tid='PageBody'>
-                {children}
-            </div>
-        </Spin>
+        <>
+            {!skeletonProps.active ? (
+                <div style={style} className={cn(className, styles.body)} data-tid='PageBody'>
+                    {children}
+                </div>
+            ) : (
+                <Skeleton active={true} {...skeletonProps} />
+            )}
+        </>
     );
 }

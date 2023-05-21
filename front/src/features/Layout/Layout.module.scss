@@ -10,20 +10,26 @@ $side-page-width: 250px;
         top: 0;
         z-index: 1001;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
         padding: 0 $desktop-side-padding;
 
-        .logo {
-            cursor: pointer;
-            user-select: none;
-        }
+        .headerContent {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: calc($desktop-content-width + $desktop-side-padding * 2);
 
-        .username {
-            margin-right: 16px;
-            color: $white-text;
-            user-select: none;
+            .logo {
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .username {
+                margin-right: 16px;
+                color: $white-text;
+                user-select: none;
+            }
         }
     }
 

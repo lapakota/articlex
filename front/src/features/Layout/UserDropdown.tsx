@@ -48,7 +48,7 @@ export function UserDropdown() {
         <Dropdown menu={{ items: menuItems }} mouseEnterDelay={0}>
             <div style={{ cursor: 'pointer' }}>
                 <span className={styles.username}>{user?.username}</span>
-                <UserAvatar user={user} />
+                <UserAvatar avatar={user.userInfo.avatar} />
             </div>
         </Dropdown>
     );

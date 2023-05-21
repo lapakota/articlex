@@ -12,18 +12,15 @@ $padding-horizontal: 24px;
     overflow: hidden;
 }
 
-.bodyLoader {
+.body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    margin: 0 auto;
+    padding-top: $base-size * 2;
 
-    .body {
-        margin: 0 auto;
-        padding-top: $base-size * 2;
-
-        &:first-child {
-            padding-top: 0;
-        }
+    &:first-child {
+        padding-top: 0;
     }
 }
 
@@ -38,6 +35,12 @@ $padding-horizontal: 24px;
     padding: $base-size $padding-horizontal;
     background: $primary-background;
     border-radius: $base-size * 2;
+
+    .headerChild {
+        display: flex;
+        justify-content: center;
+        width: 650px;
+    }
 
     h1 {
         margin: 0;

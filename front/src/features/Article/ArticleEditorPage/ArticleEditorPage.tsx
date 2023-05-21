@@ -111,7 +111,7 @@ export function ArticleEditorPage() {
                     <div className={styles.separator} />
                 </div>
                 <PageContent.Body className={styles.content}>
-                    <Editor onInitialize={handleInitialize} autofocus />
+                    <Editor onInitialize={handleInitialize} autofocus placeholder={'Let`s write an awesome story!'} />
                 </PageContent.Body>
                 <PageContent.Footer>
                     <Form.Item className={styles.formItem}>

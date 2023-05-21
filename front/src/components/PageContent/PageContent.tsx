@@ -6,7 +6,11 @@ import { PageFooter } from './PageFooter';
 import styles from './PageContent.module.scss';
 
 export function PageContent({ children }: PropsWithChildren) {
-    return <div className={styles.content} data-tid='PageContent'>{children}</div>;
+    return (
+        <div className={styles.content} data-tid='PageContent'>
+            {children}
+        </div>
+    );
 }
 
 PageContent.Footer = PageFooter;

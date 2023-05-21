@@ -35,7 +35,7 @@ export function PageHeader({
                     <ArrowLeftOutlined /> Back
                 </button>
             )}
-            {children}
+            <div className={styles.headerChild}>{children}</div>
         </div>
     );
 }

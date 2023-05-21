@@ -1,34 +1,54 @@
-import { User } from 'src/api/contracts';
 import { UserAvatar } from './UserAvatar';
 import { UserProfileRoute } from 'src/routes';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton, Space } from 'antd';
 
 interface UserAvatarWithNameProps {
-    user: User | undefined;
+    username: string | undefined;
+    avatar: string | undefined;
+    position?: 'right' | 'left';
 }
 
-export function UserAvatarWithName({ user }: UserAvatarWithNameProps) {
+export function UserAvatarWithName({ username, avatar, position = 'right' }: UserAvatarWithNameProps) {
     const navigate = useNavigate();
 
     const onRedirectToUserPage = () => {
-        if (!user) return;
+        if (!username) return;
 
-        navigate(UserProfileRoute.getHref(user.username));
+        navigate(UserProfileRoute.getHref(username));
     };
 
-    return (
-        <>
-            {user ? (
-                <div onClick={onRedirectToUserPage}>
-                    <UserAvatar user={user} /> {user.username}
-                </div>
-            ) : (
-                <Space>
-                    <Skeleton.Avatar active size={'large'} shape={'circle'} />
-                    <Skeleton.Input active size='small' />
-                </Space>
-            )}
-        </>
-    );
+    if (position === 'right')
+        return (
+            <>
+                {username ? (
+                    <div onClick={onRedirectToUserPage}>
+                        <UserAvatar avatar={avatar} /> {username}
+                    </div>
+                ) : (
+                    <Space>
+                        <Skeleton.Avatar active size={'large'} shape={'circle'} />
+                        <Skeleton.Input active size='small' />
+                    </Space>
+                )}
+            </>
+        );
+
+    if (position === 'left')
+        return (
+            <>
+                {username ? (
+                    <div onClick={onRedirectToUserPage}>
+                        {username} <UserAvatar avatar={avatar} />
+                    </div>
+                ) : (
+                    <Space>
+                        <Skeleton.Input active size='small' />
+                        <Skeleton.Avatar active size={'large'} shape={'circle'} />
+                    </Space>
+                )}
+            </>
+        );
+
+    return null;
 }

@@ -61,6 +61,28 @@ export interface Article {
     creator: string;
 }
 
+export interface ArticleListItem {
+    id: string;
+    cover: string;
+    title: string;
+    description: string;
+    createdDate: string;
+    updatedDate: string;
+
+    creator: string;
+    creatorAvatar?: string;
+}
+
+export interface ArticlesSearchResponse {
+    content: ArticleListItem[];
+    totalCount: number;
+}
+
+export interface ArticlesSearchParams {
+    skip?: number;
+    take?: number;
+}
+
 export interface ArticleDto {
     cover: string;
     title: string;

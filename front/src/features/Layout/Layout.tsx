@@ -23,10 +23,12 @@ export function Layout() {
     return (
         <AntdLayout className={styles.layout}>
             <Header className={styles.header}>
-                <span className={styles.logo} onClick={onRedirectToFeedPage}>
-                    <ArticlexLogo />
-                </span>
-                <UserDropdown />
+                <div className={styles.headerContent}>
+                    <span className={styles.logo} onClick={onRedirectToFeedPage}>
+                        <ArticlexLogo />
+                    </span>
+                    <UserDropdown />
+                </div>
             </Header>
             <Content className={styles.content}>
                 {isFeedPage ? (

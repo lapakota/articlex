@@ -3,6 +3,7 @@ import { User } from 'src/auth/entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
+import { ArticlesSearchParams } from '../interface/articles-search-request';
 
 @Injectable()
 export class ArticleRepository extends Repository<Article> {
@@ -28,12 +29,16 @@ export class ArticleRepository extends Repository<Article> {
     return article;
   }
 
-  async getUserArticles(user: User): Promise<Article[]> {
-    const query = this.createQueryBuilder('article');
+  async getUserArticles(username: string, searchRequest: ArticlesSearchParams) {
+    const articlesInfo = await this.findAndCount({
+      where: { creator: username },
+      order: {
+        createdDate: 'DESC',
+      },
+      skip: searchRequest.skip,
+      take: searchRequest.take,
+    });
 
-    query.where('article.creator = :username', { username: user.username });
-
-    const articles = await query.getMany();
-    return articles;
+    return articlesInfo;
   }
 }

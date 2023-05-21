@@ -1,16 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'src/auth/entity/user.entity';
+import { UserRepository } from 'src/auth/repository/user.repository';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
+import { convertToListItem } from '../helpers/article.helper';
+import { ArticleListItem } from '../interface/article-list-item.interface';
+import { ArticlesSearchParams as ArticlesSearchParams } from '../interface/articles-search-request';
+import { ArticlesSearchResponse } from '../interface/articles-search-response';
 import { ArticleRepository } from '../repository/article.repository';
 
 @Injectable()
 export class ArticleService {
-  constructor(private articleRepository: ArticleRepository) {}
-
-  async getAllArticles(user: User): Promise<Article[]> {
-    return this.articleRepository.getUserArticles(user);
-  }
+  constructor(
+    private articleRepository: ArticleRepository,
+    private userRepository: UserRepository,
+  ) {}
 
   async createArticle(articleDto: ArticleDto, user: User): Promise<Article> {
     return this.articleRepository.createArticle(articleDto, user);
@@ -38,15 +42,24 @@ export class ArticleService {
     return article;
   }
 
-  async getArticlesByUsername(username: string): Promise<Article[]> {
-    const articles = await this.articleRepository.find({
-      where: { creator: username },
-    });
+  async getArticlesByUsername(
+    username: string,
+    searchParams: ArticlesSearchParams,
+  ): Promise<ArticlesSearchResponse> {
+    const [articles, totalCount] = await this.articleRepository.getUserArticles(
+      username,
+      searchParams,
+    );
 
     if (!articles) {
       throw new NotFoundException(`No articles for username ${username}`);
     }
-    return articles;
+
+    const user = await this.userRepository.findOne({ where: { username } });
+
+    const content = articles.map((article) => convertToListItem(article, user));
+
+    return { content, totalCount };
   }
 
   async updateArticleById(id: number, articleDto: ArticleDto, user: User) {

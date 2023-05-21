@@ -14,6 +14,8 @@ import {
 import { reactQueryHelper } from 'src/api/reactQuery.helper';
 import { useMessageToast } from 'src/contexts/MessageToastContext';
 import { normFile } from 'src/helpers/files.helper';
+import { useNavigate } from 'react-router-dom';
+import { UserProfileRoute } from 'src/routes';
 import styles from './SettingsPage.module.scss';
 
 type FormState = Omit<UpdateUserInfoDto, 'avatar'> & { avatar?: UploadFile[] };
@@ -24,6 +26,7 @@ export function SettingsPage() {
 
     const { messageApi } = useMessageToast();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { user } = useCurrentUser();
 
@@ -44,6 +47,8 @@ export function SettingsPage() {
                 content: 'User information was successfully updated!',
                 duration: 2,
             });
+
+            user?.username && navigate(UserProfileRoute.getHref(user.username));
         },
     });
 
@@ -69,7 +74,7 @@ export function SettingsPage() {
             <PageContent.Header withBackButton>
                 <h1>Settings</h1>
             </PageContent.Header>
-            <PageContent.Body className={styles.content}>
+            <PageContent.Body className={styles.content} active={!user}>
                 {user && (
                     <Form
                         className={styles.form}
