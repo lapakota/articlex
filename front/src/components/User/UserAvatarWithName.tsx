@@ -7,9 +7,10 @@ interface UserAvatarWithNameProps {
     username: string | undefined;
     avatar: string | undefined;
     position?: 'right' | 'left';
+    className?: string;
 }
 
-export function UserAvatarWithName({ username, avatar, position = 'right' }: UserAvatarWithNameProps) {
+export function UserAvatarWithName({ username, avatar, position = 'right', className }: UserAvatarWithNameProps) {
     const navigate = useNavigate();
 
     const onRedirectToUserPage = () => {
@@ -18,18 +19,22 @@ export function UserAvatarWithName({ username, avatar, position = 'right' }: Use
         navigate(UserProfileRoute.getHref(username));
     };
 
+    const skeleton = (
+        <Space>
+            <Skeleton.Input active size='small' />
+            <Skeleton.Avatar active size={'large'} shape={'circle'} />
+        </Space>
+    );
+
     if (position === 'right')
         return (
             <>
                 {username ? (
-                    <div onClick={onRedirectToUserPage}>
+                    <div className={className} onClick={onRedirectToUserPage} style={{ cursor: 'pointer' }}>
                         <UserAvatar avatar={avatar} /> {username}
                     </div>
                 ) : (
-                    <Space>
-                        <Skeleton.Avatar active size={'large'} shape={'circle'} />
-                        <Skeleton.Input active size='small' />
-                    </Space>
+                    skeleton
                 )}
             </>
         );
@@ -38,14 +43,11 @@ export function UserAvatarWithName({ username, avatar, position = 'right' }: Use
         return (
             <>
                 {username ? (
-                    <div onClick={onRedirectToUserPage}>
+                    <div className={className} onClick={onRedirectToUserPage} style={{ cursor: 'pointer' }}>
                         {username} <UserAvatar avatar={avatar} />
                     </div>
                 ) : (
-                    <Space>
-                        <Skeleton.Input active size='small' />
-                        <Skeleton.Avatar active size={'large'} shape={'circle'} />
-                    </Space>
+                    skeleton
                 )}
             </>
         );

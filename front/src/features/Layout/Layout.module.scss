@@ -25,9 +25,10 @@ $side-page-width: 250px;
                 user-select: none;
             }
 
-            .username {
+            .userDropdown {
                 margin-right: 16px;
                 color: $white-text;
+                cursor: pointer;
                 user-select: none;
             }
         }

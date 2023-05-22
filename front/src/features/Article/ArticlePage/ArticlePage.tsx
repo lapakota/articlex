@@ -32,7 +32,7 @@ export function ArticlePage() {
             <PageContent.Body className={styles.content} active={isLoading}>
                 <Space size={'middle'} direction='vertical'>
                     {articleCreator && (
-                        <div style={{ width: 650, cursor: 'pointer' }}>
+                        <div style={{ width: 650 }}>
                             <UserAvatarWithName
                                 username={articleCreator.username}
                                 avatar={articleCreator.userInfo.avatar}

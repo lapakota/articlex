@@ -10,8 +10,8 @@ const ReactEditorJS = createReactEditorJS();
 
 export function Editor({ ...props }: WrapperProps) {
     return (
-        <ReactEditorJS holder='holder' tools={EDITOR_TOOLS} {...props}>
-            <div className={styles.holder} id='holder' />
+        <ReactEditorJS holder='editorHolder' tools={EDITOR_TOOLS} {...props}>
+            <div className={styles.holder} id='editorHolder' />
         </ReactEditorJS>
     );
 }

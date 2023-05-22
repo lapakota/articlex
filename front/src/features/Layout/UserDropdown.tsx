@@ -4,8 +4,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { useCurrentUser } from 'src/contexts/UserContext';
 import { AuthRoute, FeedRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
+import { UserAvatarWithName } from 'src/components/User/UserAvatarWithName';
 import styles from './Layout.module.scss';
-import { UserAvatar } from 'src/components/User/UserAvatar';
 
 export function UserDropdown() {
     const { user } = useCurrentUser();
@@ -46,9 +46,13 @@ export function UserDropdown() {
 
     return (
         <Dropdown menu={{ items: menuItems }} mouseEnterDelay={0}>
-            <div style={{ cursor: 'pointer' }}>
-                <span className={styles.username}>{user?.username}</span>
-                <UserAvatar avatar={user.userInfo.avatar} />
+            <div>
+                <UserAvatarWithName
+                    className={styles.userDropdown}
+                    username={user.username}
+                    avatar={user.userInfo.avatar}
+                    position='left'
+                />
             </div>
         </Dropdown>
     );

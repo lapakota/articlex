@@ -115,7 +115,7 @@ export function ArticleEditorPage() {
                 </PageContent.Body>
                 <PageContent.Footer>
                     <Form.Item className={styles.formItem}>
-                        <Button disabled={!editorCore} type='primary' htmlType='submit'>
+                        <Button disabled={!editorCore} type='primary' htmlType='submit' size='large'>
                             Post article
                         </Button>
                     </Form.Item>
