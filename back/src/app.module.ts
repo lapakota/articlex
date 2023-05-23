@@ -7,6 +7,7 @@ import { dataSourceOptions } from 'db/data-source';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PhotosModule } from './photos/photos.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PhotosModule } from './photos/photos.module';
     ArticleModule,
     UserModule,
     PhotosModule,
+    SubscriptionModule,
   ],
 })
 export class AppModule {}

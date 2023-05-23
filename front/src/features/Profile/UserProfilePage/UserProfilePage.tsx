@@ -29,6 +29,18 @@ export function UserProfilePage() {
         queryFn: () => api.article.getArticlesByUsername(username || '').then((x) => x.data),
     });
 
+    const isSubscribed = authenticatedUser?.userInfo.subscriptions.find((x) => x.subscribedUsername === username);
+
+    // TODO Переписать на мутацию которая обновит состояние пользователя
+    const handleSubscription = async () => {
+        if (!username) return;
+
+        if (isSubscribed) api.subscription.unsubscribe(username);
+        else {
+            api.subscription.subscribe(username);
+        }
+    };
+
     const tabItems = [
         {
             label: 'User posts',
@@ -96,8 +108,13 @@ export function UserProfilePage() {
                             </div>
                         </div>
                         {authenticatedUser?.username !== username && (
-                            <Button type='primary' htmlType='submit' style={{ width: 150 }}>
-                                Follow
+                            <Button
+                                type={isSubscribed ? 'default' : 'primary'}
+                                htmlType='submit'
+                                style={{ width: 150 }}
+                                onClick={handleSubscription}
+                            >
+                                {isSubscribed ? 'Unfollow' : 'Follow'}
                             </Button>
                         )}
                     </div>

@@ -67,6 +67,7 @@ export class UserService {
     const userInfo = await this.getUserInfo(user);
 
     userInfo.avatar = userInfoDto.avatar || userInfo.avatar;
+
     userInfo.email = userInfoDto.email || userInfo.email;
     userInfo.fullName = userInfoDto.fullName || userInfo.fullName;
     userInfo.gender = userInfoDto.gender || userInfo.gender;

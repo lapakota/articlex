@@ -29,12 +29,19 @@ export interface Tokens {
     refreshToken: string;
 }
 
+export interface Subscription {
+    id: string;
+    subscribedUsername: string;
+    subscribedUserAvatar?: string;
+}
+
 export interface UserInfo {
-    id: number;
+    id: string;
     email: string;
     fullName: string;
     gender: Gender;
     avatar?: string;
+    subscriptions: Subscription[];
 }
 
 export interface User {

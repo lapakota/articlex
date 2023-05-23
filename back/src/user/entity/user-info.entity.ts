@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Subscription } from 'src/subscription/entity/subscription.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class UserInfo extends BaseEntity {
@@ -16,4 +23,9 @@ export class UserInfo extends BaseEntity {
 
   @Column({ type: 'varchar', nullable: true })
   avatar: string;
+
+  @OneToMany(() => Subscription, (subscription) => subscription.subscriber, {
+    eager: true,
+  })
+  subscriptions: Subscription[];
 }
