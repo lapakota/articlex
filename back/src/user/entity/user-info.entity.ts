@@ -28,4 +28,9 @@ export class UserInfo extends BaseEntity {
     eager: true,
   })
   subscriptions: Subscription[];
+
+  @OneToMany(() => Subscription, (subscription) => subscription.target, {
+    eager: true,
+  })
+  followers: Subscription[];
 }

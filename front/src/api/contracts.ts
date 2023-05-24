@@ -31,8 +31,8 @@ export interface Tokens {
 
 export interface Subscription {
     id: string;
+    subscriberUsername: string;
     subscribedUsername: string;
-    subscribedUserAvatar?: string;
 }
 
 export interface UserInfo {
@@ -42,6 +42,7 @@ export interface UserInfo {
     gender: Gender;
     avatar?: string;
     subscriptions: Subscription[];
+    followers: Subscription[];
 }
 
 export interface User {

@@ -14,10 +14,10 @@ export class Subscription extends BaseEntity {
   id: number;
 
   @Column({ type: 'varchar' })
-  subscribedUsername: string;
+  subscriberUsername: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  subscribedUserAvatar: string;
+  @Column({ type: 'varchar' })
+  subscribedUsername: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'subscriber_id' })

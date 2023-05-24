@@ -48,15 +48,15 @@ export class SubscriptionService {
 
     subscription.target = target;
 
+    subscription.subscriberUsername = user.username;
     subscription.subscribedUsername = target.username;
-    subscription.subscribedUserAvatar = target.userInfo.avatar;
 
     await this.subscriptionRepository.save(subscription);
 
     const response: SubscriptionResponse = {
       id: subscription.id,
+      subscriberUsername: subscription.subscriberUsername,
       subscribedUsername: subscription.subscribedUsername,
-      subscribedUserAvatar: subscription.subscribedUserAvatar,
     };
     return response;
   }

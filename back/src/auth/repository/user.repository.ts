@@ -31,6 +31,7 @@ export class UserRepository extends Repository<User> {
       userInfo.fullName = signupCredentialsDto.fullName;
       userInfo.gender = signupCredentialsDto.gender;
       userInfo.subscriptions = [];
+      userInfo.followers = [];
       await userInfo.save();
 
       user.userInfo = userInfo;

@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { Button, Skeleton, Space, Tabs } from 'antd';
-import { useParams } from 'react-router-dom';
+import { Button, Dropdown, MenuProps, Skeleton, Space, Tabs } from 'antd';
+import { NavLink, useParams } from 'react-router-dom';
 import { api } from 'src/api/api';
 import { reactQueryHelper } from 'src/api/reactQuery.helper';
 import { PageContent } from 'src/components/PageContent';
 import { UserAvatar } from 'src/components/User/UserAvatar';
-import { UserProfileRouteParams } from 'src/routes';
+import { UserProfileRoute, UserProfileRouteParams } from 'src/routes';
 import { useCurrentUser } from 'src/contexts/UserContext';
 import { ArticleCard } from 'src/features/Article';
+import { useSubscribe } from 'src/api/services/subscription/useSubscribe';
+import { useUnsubscribe } from 'src/api/services/subscription/useUnsubscribe';
 import styles from './UserProfilePage.module.scss';
 
 enum UserProfileTabs {
@@ -29,15 +31,19 @@ export function UserProfilePage() {
         queryFn: () => api.article.getArticlesByUsername(username || '').then((x) => x.data),
     });
 
-    const isSubscribed = authenticatedUser?.userInfo.subscriptions.find((x) => x.subscribedUsername === username);
+    const { subscribe } = useSubscribe(authenticatedUser?.username, username);
+    const { unsubscribe } = useUnsubscribe(authenticatedUser?.username, username);
 
-    // TODO Переписать на мутацию которая обновит состояние пользователя
+    const isSubscribed = authenticatedUser?.userInfo.subscriptions.find(
+        (x) => x.subscribedUsername === username && x.subscriberUsername === authenticatedUser.username,
+    );
+
     const handleSubscription = async () => {
         if (!username) return;
 
-        if (isSubscribed) api.subscription.unsubscribe(username);
+        if (isSubscribed) unsubscribe(username);
         else {
-            api.subscription.subscribe(username);
+            subscribe(username);
         }
     };
 
@@ -65,6 +71,18 @@ export function UserProfilePage() {
             children: 'User liked',
         },
     ];
+
+    const subscriptionsItems: MenuProps['items'] =
+        fetchedUser?.userInfo.subscriptions.map((x) => ({
+            key: x.id,
+            label: <NavLink to={UserProfileRoute.getHref(x.subscribedUsername)}>{x.subscribedUsername}</NavLink>,
+        })) || [];
+
+    const followersItems: MenuProps['items'] =
+        fetchedUser?.userInfo.followers.map((x) => ({
+            key: x.id,
+            label: <NavLink to={UserProfileRoute.getHref(x.subscriberUsername)}>{x.subscriberUsername}</NavLink>,
+        })) || [];
 
     return (
         <PageContent>
@@ -94,14 +112,18 @@ export function UserProfilePage() {
                                 <div className={styles.caption}>Gender</div>
                                 <span>{fetchedUser?.userInfo.gender}</span>
                             </div>
-                            <div>
-                                <div className={styles.caption}>Following</div>
-                                <span>0</span>
-                            </div>
-                            <div>
-                                <div className={styles.caption}>Following</div>
-                                <span>0</span>
-                            </div>
+                            <Dropdown menu={{ items: subscriptionsItems }} placement='top'>
+                                <div>
+                                    <div className={styles.caption}>Following</div>
+                                    <span>{fetchedUser?.userInfo.subscriptions.length || 0}</span>
+                                </div>
+                            </Dropdown>
+                            <Dropdown menu={{ items: followersItems }} placement='top'>
+                                <div>
+                                    <div className={styles.caption}>Followers</div>
+                                    <span>{fetchedUser?.userInfo.followers.length || 0}</span>
+                                </div>
+                            </Dropdown>
                             <div>
                                 <div className={styles.caption}>Posts</div>
                                 <span>{fetchedArticlesData?.totalCount}</span>
