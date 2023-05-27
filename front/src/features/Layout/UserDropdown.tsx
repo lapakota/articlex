@@ -2,13 +2,13 @@ import { SettingOutlined, ExclamationCircleOutlined, ProfileOutlined, BookOutlin
 import { Dropdown, MenuProps, Spin } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from 'src/api/api';
-import { useCurrentUser } from 'src/contexts/UserContext';
+import { useAuthenticatedUser } from 'src/contexts/UserContext';
 import { AuthRoute, FeedRoute, UserProfileRoute, UserSettingsRoute } from 'src/routes';
 import { UserAvatarWithName } from 'src/components/User/UserAvatarWithName';
 import styles from './Layout.module.scss';
 
 export function UserDropdown() {
-    const { user } = useCurrentUser();
+    const { user } = useAuthenticatedUser();
 
     const navigate = useNavigate();
 

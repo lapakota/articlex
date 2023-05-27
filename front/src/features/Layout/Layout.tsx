@@ -1,7 +1,7 @@
 import { Layout as AntdLayout, Spin } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { UserDropdown } from './UserDropdown';
-import { useCurrentUser } from 'src/contexts/UserContext';
+import { useAuthenticatedUser } from 'src/contexts/UserContext';
 import { FeedRoute } from 'src/routes';
 import { FeedFilters } from '../Feed/FeedFilters';
 import { ArticlexLogo } from './ArticlexLogo';
@@ -14,7 +14,7 @@ export function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { user } = useCurrentUser();
+    const { user } = useAuthenticatedUser();
 
     const onRedirectToFeedPage = () => navigate(FeedRoute.getHref());
 

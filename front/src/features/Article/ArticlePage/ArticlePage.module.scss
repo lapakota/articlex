@@ -6,6 +6,12 @@
     align-items: center;
     padding-top: 32px;
 
+    .userPanel {
+        display: flex;
+        justify-content: space-between;
+        width: 650px;
+    }
+
     .description {
         width: 650px;
         padding-bottom: 16px;

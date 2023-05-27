@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select, Space, Upload, UploadFile } from 'antd';
 import { MailOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContent } from 'src/components/PageContent';
-import { useCurrentUser } from 'src/contexts/UserContext';
+import { useAuthenticatedUser } from 'src/contexts/UserContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateUserInfoDto, User } from 'src/api/contracts';
 import { api } from 'src/api/api';
@@ -28,7 +28,7 @@ export function SettingsPage() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const { user } = useCurrentUser();
+    const { user } = useAuthenticatedUser();
 
     const { mutate: updateUserInfo } = useMutation({
         mutationFn: (request: UpdateUserInfoDto) => api.user.updateUserInfo(request).then((x) => x.data),

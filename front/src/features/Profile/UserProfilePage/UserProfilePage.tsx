@@ -6,7 +6,7 @@ import { reactQueryHelper } from 'src/api/reactQuery.helper';
 import { PageContent } from 'src/components/PageContent';
 import { UserAvatar } from 'src/components/User/UserAvatar';
 import { UserProfileRoute, UserProfileRouteParams } from 'src/routes';
-import { useCurrentUser } from 'src/contexts/UserContext';
+import { useAuthenticatedUser } from 'src/contexts/UserContext';
 import { ArticleCard } from 'src/features/Article';
 import { useSubscribe } from 'src/api/services/subscription/useSubscribe';
 import { useUnsubscribe } from 'src/api/services/subscription/useUnsubscribe';
@@ -19,7 +19,7 @@ enum UserProfileTabs {
 
 export function UserProfilePage() {
     const { username } = useParams<UserProfileRouteParams>();
-    const { user: authenticatedUser } = useCurrentUser();
+    const { user: authenticatedUser } = useAuthenticatedUser();
 
     const { isLoading: isUserLoading, data: fetchedUser } = useQuery({
         queryKey: reactQueryHelper.getUserKey(username),
@@ -54,7 +54,7 @@ export function UserProfilePage() {
             children: (
                 <>
                     {!isArticlesLoading ? (
-                        <Space direction='vertical' size='middle' style={{ width: '100%', padding: '8px 64px' }}>
+                        <Space direction='vertical' size='middle' style={{ width: '100%', padding: '8px 16px' }}>
                             {fetchedArticlesData?.content.map((articleInfo) => (
                                 <ArticleCard key={articleInfo.id} articleInfo={articleInfo} />
                             ))}

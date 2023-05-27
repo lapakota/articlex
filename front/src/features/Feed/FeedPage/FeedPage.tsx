@@ -19,7 +19,7 @@ export function FeedPage() {
                 {!isLoading && (!feed || feed?.content.length === 0) && (
                     <span>No articles was found by your request</span>
                 )}
-                <Space direction='vertical' size='middle' style={{ width: '100%', padding: '8px 64px' }}>
+                <Space direction='vertical' size='middle' style={{ width: '100%', padding: '8px 16px' }}>
                     {feed?.content.map((article) => (
                         <ArticleCard key={article.id} articleInfo={article} />
                     ))}

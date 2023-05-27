@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'src/auth/entity/user.entity';
 import { UserRepository } from 'src/auth/repository/user.repository';
-import { ArrayContains, In } from 'typeorm';
+import { In } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
 import {
@@ -33,11 +33,11 @@ export class ArticleService {
     );
 
     if (!articles) {
-      throw new NotFoundException(`No articles for username`);
+      throw new NotFoundException(`No articles`);
     }
 
     const allCreators = articles.map((x) => x.creator);
-    const allCreatorsAvatars = (
+    const mapCreatorNameToAvatar = (
       await this.userRepository.findBy({
         username: In(allCreators),
       })
@@ -50,7 +50,10 @@ export class ArticleService {
     );
 
     const content = articles.map((article) =>
-      convertToListItemWithAvatar(article, allCreatorsAvatars[article.creator]),
+      convertToListItemWithAvatar(
+        article,
+        mapCreatorNameToAvatar[article.creator],
+      ),
     );
 
     return { content, totalCount };
@@ -100,9 +103,10 @@ export class ArticleService {
 
   async updateArticleById(id: number, articleDto: ArticleDto, user: User) {
     const article = await this.getUserArticleById(id, user);
-    article.title = articleDto.title;
-    article.description = articleDto.description;
-    article.body = articleDto.body;
+    article.cover = articleDto.cover || article.cover;
+    article.title = articleDto.title || article.title;
+    article.description = articleDto.description || article.description;
+    article.body = articleDto.body || article.body;
 
     await article.save();
     return article;
