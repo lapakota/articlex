@@ -18,8 +18,9 @@ import { User } from 'src/auth/entity/user.entity';
 import { JwtAuthenticationGuard } from 'src/auth/guards/jwt-authentication.guard';
 import { ArticleDto } from './dto/article.dto';
 import { Article } from './entity/article.entity';
-import { ArticlesSearchParams } from './interface/articles-search-request';
+import { ArticlesSearchParams } from './interface/articles-search-params';
 import { ArticlesSearchResponse } from './interface/articles-search-response';
+import { FeedSearchParams } from './interface/feed-search-params';
 import { ArticleService } from './service/article.service';
 
 @ApiTags('Article')
@@ -36,6 +37,14 @@ export class ArticleController {
     @GetUser() user: User,
   ): Promise<Article> {
     return this.articleService.createArticle(articleDto, user);
+  }
+
+  @Get('/feed')
+  getArticlesFeed(
+    @GetUser() user: User,
+    @Query() searchParams: FeedSearchParams,
+  ): Promise<ArticlesSearchResponse> {
+    return this.articleService.getArticlesFeed(user, searchParams);
   }
 
   @Get('/:id')

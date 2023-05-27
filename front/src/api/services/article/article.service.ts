@@ -1,7 +1,11 @@
-import { ArticleDto, Article, ArticlesSearchParams, ArticlesSearchResponse } from 'src/api/contracts';
+import { ArticleDto, Article, ArticlesSearchParams, ArticlesSearchResponse, FeedSearchParams } from 'src/api/contracts';
 import axiosWithAuth from 'src/api/interceptors';
 
 export const ArticleService = {
+    async getArticlesFeed(params?: FeedSearchParams) {
+        return axiosWithAuth.get<ArticlesSearchResponse>('article/feed', { params });
+    },
+
     async getArticleById(id: string) {
         return axiosWithAuth.get<Article>(`article/${id}`);
     },

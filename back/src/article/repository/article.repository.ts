@@ -3,7 +3,7 @@ import { User } from 'src/auth/entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
-import { ArticlesSearchParams } from '../interface/articles-search-request';
+import { ArticlesSearchParams } from '../interface/articles-search-params';
 
 @Injectable()
 export class ArticleRepository extends Repository<Article> {
@@ -27,6 +27,18 @@ export class ArticleRepository extends Repository<Article> {
 
     delete article.user;
     return article;
+  }
+
+  async getAllArticles(searchRequest: ArticlesSearchParams) {
+    const articlesInfo = await this.findAndCount({
+      order: {
+        createdDate: 'DESC',
+      },
+      skip: searchRequest.skip,
+      take: searchRequest.take,
+    });
+
+    return articlesInfo;
   }
 
   async getUserArticles(username: string, searchRequest: ArticlesSearchParams) {

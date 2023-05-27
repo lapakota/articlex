@@ -10,14 +10,11 @@
     }
 
     .userInfoWrapper {
-        display: flex;
-        justify-content: space-between;
-
         .userInfo {
             display: grid;
             grid-gap: 16px;
             grid-template-rows: repeat(2, 64px);
-            grid-template-columns: repeat(3, 200px);
+            grid-template-columns: repeat(3, 33%);
             word-wrap: break-word;
 
             .caption {

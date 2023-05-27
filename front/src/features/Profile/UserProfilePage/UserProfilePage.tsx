@@ -94,6 +94,18 @@ export function UserProfilePage() {
                     <UserAvatar avatar={fetchedUser?.userInfo.avatar} size={150} />
                 </div>
                 <Space direction='vertical' size={'large'} style={{ width: '100%' }}>
+                    {authenticatedUser?.username !== username && (
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button
+                                type={isSubscribed ? 'default' : 'primary'}
+                                htmlType='submit'
+                                style={{ width: 150 }}
+                                onClick={handleSubscription}
+                            >
+                                {isSubscribed ? 'Unfollow' : 'Follow'}
+                            </Button>
+                        </div>
+                    )}
                     <div className={styles.userInfoWrapper}>
                         <div className={styles.userInfo}>
                             <div>
@@ -129,16 +141,6 @@ export function UserProfilePage() {
                                 <span>{fetchedArticlesData?.totalCount}</span>
                             </div>
                         </div>
-                        {authenticatedUser?.username !== username && (
-                            <Button
-                                type={isSubscribed ? 'default' : 'primary'}
-                                htmlType='submit'
-                                style={{ width: 150 }}
-                                onClick={handleSubscription}
-                            >
-                                {isSubscribed ? 'Unfollow' : 'Follow'}
-                            </Button>
-                        )}
                     </div>
 
                     <Tabs defaultActiveKey={UserProfileTabs.Posts} items={tabItems} />

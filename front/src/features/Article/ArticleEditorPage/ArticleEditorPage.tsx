@@ -13,12 +13,12 @@ import {
     articleDescriptionRules,
     articleTitleRules,
 } from 'src/helpers/validations/articles.validations';
-import { OutputData } from '@editorjs/editorjs';
 import { useNavigate } from 'react-router-dom';
 import { FeedRoute } from 'src/routes';
 import { normFile } from 'src/helpers/files.helper';
 import { PlusOutlined } from '@ant-design/icons';
 import cn from 'classnames';
+import { ArticleBody } from 'src/types/ArticleBody';
 import styles from './ArticleEditorPage.module.scss';
 
 type FormState = Omit<ArticleDto, 'body' | 'cover'> & { cover: UploadFile[] };
@@ -59,11 +59,15 @@ export function ArticleEditorPage() {
     const onFinish = async (formValues: FormState) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const editorData: OutputData = await editorCore?.current?.save();
-        const body = JSON.stringify(editorData);
+        const editorData: ArticleBody = await editorCore?.current?.save();
         const cover = (formValues.cover[0]?.response?.photo as string) || '';
 
-        const request: ArticleDto = { title: formValues.title, description: formValues.description, body, cover };
+        const request: ArticleDto = {
+            title: formValues.title,
+            description: formValues.description,
+            body: editorData,
+            cover,
+        };
         postNewArticle(request);
     };
 

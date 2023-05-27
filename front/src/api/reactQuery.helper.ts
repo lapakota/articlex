@@ -1,3 +1,5 @@
+import { FeedSearchParams } from './contracts';
+
 export const reactQueryHelper = {
     getAuthenticatedUserKey() {
         return ['authenticatedUser'];
@@ -9,6 +11,10 @@ export const reactQueryHelper = {
 
     getArticleKey(articleId: string | undefined) {
         return ['article', articleId];
+    },
+
+    getFeedKey(params: FeedSearchParams) {
+        return ['feed', params];
     },
 
     getUserArticlesKey(username: string | undefined) {

@@ -19,10 +19,10 @@ export class Article extends BaseEntity {
   @Column({ type: 'varchar' })
   title: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   description: string;
 
-  @Column()
+  @Column({ type: 'json' })
   body: string;
 
   @CreateDateColumn({ type: 'timestamp' })

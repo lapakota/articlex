@@ -91,6 +91,17 @@ export interface ArticlesSearchParams {
     take?: number;
 }
 
+export interface FeedSearchParams {
+    skip?: number;
+    take?: number;
+
+    filters?: {
+        fromDate?: Date;
+        toDate?: Date;
+        bySubscriptions?: boolean;
+    };
+}
+
 export interface ArticleDto {
     cover: string;
     title: string;

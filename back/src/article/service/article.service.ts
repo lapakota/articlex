@@ -1,12 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'src/auth/entity/user.entity';
 import { UserRepository } from 'src/auth/repository/user.repository';
+import { ArrayContains, In } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
-import { convertToListItem } from '../helpers/article.helper';
-import { ArticleListItem } from '../interface/article-list-item.interface';
-import { ArticlesSearchParams as ArticlesSearchParams } from '../interface/articles-search-request';
+import {
+  convertToListItem,
+  convertToListItemWithAvatar,
+} from '../helpers/article.helper';
+import { ArticlesSearchParams as ArticlesSearchParams } from '../interface/articles-search-params';
 import { ArticlesSearchResponse } from '../interface/articles-search-response';
+import { FeedSearchParams } from '../interface/feed-search-params';
 import { ArticleRepository } from '../repository/article.repository';
 
 @Injectable()
@@ -18,6 +22,38 @@ export class ArticleService {
 
   async createArticle(articleDto: ArticleDto, user: User): Promise<Article> {
     return this.articleRepository.createArticle(articleDto, user);
+  }
+
+  async getArticlesFeed(
+    user: User,
+    searchParams: FeedSearchParams,
+  ): Promise<ArticlesSearchResponse> {
+    const [articles, totalCount] = await this.articleRepository.getAllArticles(
+      searchParams,
+    );
+
+    if (!articles) {
+      throw new NotFoundException(`No articles for username`);
+    }
+
+    const allCreators = articles.map((x) => x.creator);
+    const allCreatorsAvatars = (
+      await this.userRepository.findBy({
+        username: In(allCreators),
+      })
+    ).reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr.username]: curr.userInfo.avatar,
+      }),
+      {},
+    );
+
+    const content = articles.map((article) =>
+      convertToListItemWithAvatar(article, allCreatorsAvatars[article.creator]),
+    );
+
+    return { content, totalCount };
   }
 
   async getUserArticleById(id: number, user: User): Promise<Article> {

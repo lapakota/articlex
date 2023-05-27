@@ -41,7 +41,7 @@ export function ArticlePage() {
                     )}
                     <Image width={650} height={300} style={{ objectFit: 'cover' }} src={getImageLink(article?.cover)} />
                     <div className={styles.description}>{article?.description}</div>
-                    {article && <Editor defaultValue={JSON.parse(article.body)} readOnly />}
+                    {article && <Editor defaultValue={article.body} readOnly />}
                 </Space>
             </PageContent.Body>
         </PageContent>

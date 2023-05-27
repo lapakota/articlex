@@ -18,3 +18,20 @@ export function convertToListItem(
     creatorAvatar: user.userInfo.avatar,
   };
 }
+
+export function convertToListItemWithAvatar(
+  article: Article,
+  avatar?: string,
+): ArticleListItem {
+  return {
+    id: article.id,
+    title: article.title,
+    description: article.description,
+    cover: article.cover,
+    createdDate: article.createdDate,
+    updatedDate: article.updatedDate,
+
+    creator: article.creator,
+    creatorAvatar: avatar,
+  };
+}
