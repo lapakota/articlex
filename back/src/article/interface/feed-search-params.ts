@@ -3,8 +3,8 @@ export interface FeedSearchParams {
   take?: number;
 
   filters?: {
-    fromDate?: Date;
-    toDate?: Date;
-    bySubscriptions?: boolean;
+    onlySubscriptions?: boolean;
+    fromDate?: Date | string;
+    endDate?: Date | string;
   };
 }

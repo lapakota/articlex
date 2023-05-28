@@ -4,10 +4,7 @@ import { UserRepository } from 'src/auth/repository/user.repository';
 import { In } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
-import {
-  convertToListItem,
-  convertToListItemWithAvatar,
-} from '../helpers/article.helper';
+import { convertToListItem } from '../helpers/article.helper';
 import { ArticlesSearchParams as ArticlesSearchParams } from '../interface/articles-search-params';
 import { ArticlesSearchResponse } from '../interface/articles-search-response';
 import { FeedSearchParams } from '../interface/feed-search-params';
@@ -28,9 +25,21 @@ export class ArticleService {
     user: User,
     searchParams: FeedSearchParams,
   ): Promise<ArticlesSearchResponse> {
-    const [articles, totalCount] = await this.articleRepository.getAllArticles(
-      searchParams,
-    );
+    // TODO fix https://stackoverflow.com/questions/59046629/boolean-parameter-in-request-body-is-always-true-in-nestjs-api
+    searchParams.filters = searchParams.filters ?? {};
+    searchParams.filters.onlySubscriptions =
+      searchParams.filters.onlySubscriptions =
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        searchParams.filters.onlySubscriptions === 'true';
+
+    console.log(searchParams, '=======');
+    const [articles, totalCount] = searchParams.filters?.onlySubscriptions
+      ? await this.articleRepository.getArticlesBySubscriptions(
+          user,
+          searchParams,
+        )
+      : await this.articleRepository.getAllArticles(searchParams);
 
     if (!articles) {
       throw new NotFoundException(`No articles`);
@@ -50,10 +59,7 @@ export class ArticleService {
     );
 
     const content = articles.map((article) =>
-      convertToListItemWithAvatar(
-        article,
-        mapCreatorNameToAvatar[article.creator],
-      ),
+      convertToListItem(article, mapCreatorNameToAvatar[article.creator]),
     );
 
     return { content, totalCount };
@@ -96,7 +102,9 @@ export class ArticleService {
 
     const user = await this.userRepository.findOne({ where: { username } });
 
-    const content = articles.map((article) => convertToListItem(article, user));
+    const content = articles.map((article) =>
+      convertToListItem(article, user.userInfo.avatar),
+    );
 
     return { content, totalCount };
   }

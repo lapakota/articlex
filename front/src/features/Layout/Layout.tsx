@@ -21,7 +21,7 @@ export function Layout() {
     const isFeedPage = location.pathname === FeedRoute.baseRoute;
 
     return (
-        <AntdLayout className={styles.layout}>
+        <AntdLayout className={styles.layout} id="antdLayout">
             <Header className={styles.header}>
                 <div className={styles.headerContent}>
                     <span className={styles.logo} onClick={onRedirectToFeedPage}>

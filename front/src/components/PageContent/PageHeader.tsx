@@ -31,7 +31,7 @@ export function PageHeader({
     return (
         <div className={cn(styles.header)}>
             {withBackButton && (
-                <button className={styles.backButton} onClick={handleGoBack} data-tid='BackButton'>
+                <button className={styles.backButton} onClick={handleGoBack} data-tid='BackButton' type='button'>
                     <ArrowLeftOutlined /> Back
                 </button>
             )}

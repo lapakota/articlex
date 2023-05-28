@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/auth/entity/user.entity';
-import { DataSource, Repository } from 'typeorm';
+import { Between, DataSource, In, Repository } from 'typeorm';
 import { ArticleDto } from '../dto/article.dto';
 import { Article } from '../entity/article.entity';
 import { ArticlesSearchParams } from '../interface/articles-search-params';
+import { FeedSearchParams } from '../interface/feed-search-params';
 
 @Injectable()
 export class ArticleRepository extends Repository<Article> {
@@ -29,8 +30,44 @@ export class ArticleRepository extends Repository<Article> {
     return article;
   }
 
-  async getAllArticles(searchRequest: ArticlesSearchParams) {
+  async getAllArticles(searchRequest: FeedSearchParams) {
     const articlesInfo = await this.findAndCount({
+      where: {
+        createdDate:
+          searchRequest?.filters?.fromDate && searchRequest?.filters?.endDate
+            ? Between(
+                new Date(searchRequest.filters.fromDate),
+                new Date(searchRequest.filters.endDate),
+              )
+            : undefined,
+      },
+      order: {
+        createdDate: 'DESC',
+      },
+      skip: searchRequest.skip,
+      take: searchRequest.take,
+    });
+
+    return articlesInfo;
+  }
+
+  async getArticlesBySubscriptions(
+    user: User,
+    searchRequest: FeedSearchParams,
+  ) {
+    const articlesInfo = await this.findAndCount({
+      where: {
+        creator: In(
+          user.userInfo.subscriptions.map((x) => x.subscribedUsername),
+        ),
+        createdDate:
+          searchRequest?.filters?.fromDate && searchRequest?.filters?.endDate
+            ? Between(
+                new Date(searchRequest.filters.fromDate),
+                new Date(searchRequest.filters.endDate),
+              )
+            : undefined,
+      },
       order: {
         createdDate: 'DESC',
       },

@@ -1,3 +1,4 @@
+import { FeedFilter } from 'src/features/Feed/FeedFilters/helpers/filter.helper';
 import { ArticleBody } from 'src/types/ArticleBody';
 import { Gender } from 'src/types/Gender';
 
@@ -95,11 +96,7 @@ export interface FeedSearchParams {
     skip?: number;
     take?: number;
 
-    filters?: {
-        fromDate?: Date;
-        toDate?: Date;
-        bySubscriptions?: boolean;
-    };
+    filters?: FeedFilter;
 }
 
 export interface ArticleDto {

@@ -1,4 +1,4 @@
-import { FeedSearchParams } from './contracts';
+import { FeedFilter } from 'src/features/Feed/FeedFilters/helpers/filter.helper';
 
 export const reactQueryHelper = {
     getAuthenticatedUserKey() {
@@ -13,8 +13,8 @@ export const reactQueryHelper = {
         return ['article', articleId];
     },
 
-    getFeedKey(params: FeedSearchParams) {
-        return ['feed', params];
+    getFeedKey(filter: FeedFilter) {
+        return ['feed', filter.fromDate, filter.endDate, filter.onlySubscriptions];
     },
 
     getUserArticlesKey(username: string | undefined) {

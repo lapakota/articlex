@@ -14,7 +14,6 @@ import styles from './UserProfilePage.module.scss';
 
 enum UserProfileTabs {
     Posts = 'posts',
-    Liked = 'liked',
 }
 
 export function UserProfilePage() {
@@ -64,11 +63,6 @@ export function UserProfilePage() {
                     )}
                 </>
             ),
-        },
-        {
-            label: 'User liked',
-            key: UserProfileTabs.Liked,
-            children: 'User liked',
         },
     ];
 
@@ -124,13 +118,21 @@ export function UserProfilePage() {
                                 <div className={styles.caption}>Gender</div>
                                 <span>{fetchedUser?.userInfo.gender}</span>
                             </div>
-                            <Dropdown menu={{ items: subscriptionsItems }} placement='top'>
+                            <Dropdown
+                                menu={{ items: subscriptionsItems }}
+                                disabled={subscriptionsItems.length === 0}
+                                placement='top'
+                            >
                                 <div>
                                     <div className={styles.caption}>Following</div>
                                     <span>{fetchedUser?.userInfo.subscriptions.length || 0}</span>
                                 </div>
                             </Dropdown>
-                            <Dropdown menu={{ items: followersItems }} placement='top'>
+                            <Dropdown
+                                menu={{ items: followersItems }}
+                                disabled={followersItems.length === 0}
+                                placement='top'
+                            >
                                 <div>
                                     <div className={styles.caption}>Followers</div>
                                     <span>{fetchedUser?.userInfo.followers.length || 0}</span>
