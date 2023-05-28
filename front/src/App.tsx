@@ -15,6 +15,7 @@ import { UserProfilePageAsync } from './features/Profile';
 import { SettingsPageAsync } from './features/Settings';
 import { FeedPageAsync } from './features/Feed';
 import { ArticlePageAsync, ArticleEditorPageAsync } from './features/Article';
+import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 
 function App() {
     return (
@@ -35,8 +36,7 @@ function App() {
 
                     <Route path={AuthRoute.baseRoute} element={<AuthPage />} />
 
-                    <Route path={'*'} element={<>NotFoundPage stub</>} />
-                    {/* <Route path={'*'} element={<NotFoundPage />} /> */}
+                    <Route path={'*'} element={<NotFoundPage />} />
                 </Routes>
             </ContextStores>
         </BrowserRouter>

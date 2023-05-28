@@ -1,0 +1,16 @@
+@import 'src/styles/variables';
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 256px;
+
+    .notFoundCaption {
+        font-size: $font-size-xxlarge;
+    }
+}
