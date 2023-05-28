@@ -59,4 +59,10 @@ $side-page-width: 250px;
     .footer {
         text-align: center;
     }
+
+    .fallbackWrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
 }

@@ -11,11 +11,10 @@ import {
 import { Layout } from './features/Layout';
 import { ContextStores } from './contexts';
 import { AuthPage } from './features/Auth';
-import { UserProfilePage } from './features/Profile';
-import { SettingsPage } from './features/Settings';
-import { FeedPage } from './features/Feed';
-import { ArticlePage } from './features/Article';
-import { ArticleEditorPage } from './features/Article/ArticleEditorPage';
+import { UserProfilePageAsync } from './features/Profile';
+import { SettingsPageAsync } from './features/Settings';
+import { FeedPageAsync } from './features/Feed';
+import { ArticlePageAsync, ArticleEditorPageAsync } from './features/Article';
 
 function App() {
     return (
@@ -25,13 +24,13 @@ function App() {
                     <Route path={RootRoute} element={<Layout />}>
                         <Route path={RootRoute} element={<Navigate to={FeedRoute.baseRoute} />} />
 
-                        <Route path={FeedRoute.baseRoute} element={<FeedPage />} />
+                        <Route path={FeedRoute.baseRoute} element={<FeedPageAsync />} />
 
-                        <Route path={ArticleRoute.baseRoute} element={<ArticlePage />} />
-                        <Route path={ArticleEditorRoute.baseRoute} element={<ArticleEditorPage />} />
+                        <Route path={ArticleRoute.baseRoute} element={<ArticlePageAsync />} />
+                        <Route path={ArticleEditorRoute.baseRoute} element={<ArticleEditorPageAsync />} />
 
-                        <Route path={UserProfileRoute.baseRoute} element={<UserProfilePage />} />
-                        <Route path={UserSettingsRoute.baseRoute} element={<SettingsPage />} />
+                        <Route path={UserProfileRoute.baseRoute} element={<UserProfilePageAsync />} />
+                        <Route path={UserSettingsRoute.baseRoute} element={<SettingsPageAsync />} />
                     </Route>
 
                     <Route path={AuthRoute.baseRoute} element={<AuthPage />} />

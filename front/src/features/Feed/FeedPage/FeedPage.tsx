@@ -70,15 +70,19 @@ export function FeedPage() {
         <PageContent.Body className={styles.content} active={isLoading}>
             <Spin size='large' spinning={isFetching}>
                 {isEmptyFeed && <span>No articles was found by your request</span>}
-                <Space direction='vertical' size='middle' style={{ width: '100%', padding: '8px 16px' }}>
-                    {feed?.pages.map((p, pageNumber) => (
-                        <div key={pageNumber}>
-                            {p.content.map((article) => (
-                                <ArticleCard key={article.id} articleInfo={article} />
-                            ))}
-                        </div>
-                    ))}
-                </Space>
+
+                {feed?.pages.map((p, pageNumber) => (
+                    <Space
+                        key={pageNumber}
+                        direction='vertical'
+                        size='middle'
+                        style={{ width: '100%', padding: '8px 16px' }}
+                    >
+                        {p.content.map((article) => (
+                            <ArticleCard key={article.id} articleInfo={article} />
+                        ))}
+                    </Space>
+                ))}
             </Spin>
         </PageContent.Body>
     );

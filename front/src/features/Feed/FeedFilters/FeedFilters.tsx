@@ -1,9 +1,9 @@
 import { Button, DatePicker } from 'antd';
 import { ArticleEditorRoute } from 'src/routes';
 import { useNavigate } from 'react-router-dom';
-import styles from './FeedFilters.module.scss';
 import { useFilter } from './hooks/useFilter';
 import dayjs, { Dayjs } from 'dayjs';
+import styles from './FeedFilters.module.scss';
 
 export function FeedFilters() {
     const { filter, handleFilterChange } = useFilter();

@@ -4433,6 +4433,13 @@ react-editor-js@^2.1.0:
     "@react-editor-js/core" "2.1.0"
     "@react-editor-js/server" "2.1.0"
 
+react-error-boundary@^4.0.7:
+  version "4.0.7"
+  resolved "https://nexus.kontur.host/repository/kontur-npm-group/react-error-boundary/-/react-error-boundary-4.0.7.tgz#dd65b16d1939894d59ab084af1d371fb10a16ebb"
+  integrity sha512-XyDSL7Uhv3PMs0e1k29cMSnZPSlUCsF7Ci0dtdcpkaWDi9bM2hw6ru2l+PgBhiqilE1ne2XIlsllcaHsn0B6Dw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 react-infinite-scroll-component@^6.1.0:
   version "6.1.0"
   resolved "https://nexus.kontur.host/repository/kontur-npm-group/react-infinite-scroll-component/-/react-infinite-scroll-component-6.1.0.tgz#7e511e7aa0f728ac3e51f64a38a6079ac522407f"
