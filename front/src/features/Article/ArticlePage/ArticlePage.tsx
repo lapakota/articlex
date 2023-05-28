@@ -12,6 +12,7 @@ import { useAuthenticatedUser } from 'src/contexts/UserContext';
 import { useMessageToast } from 'src/contexts/MessageToastContext';
 import { getAxiosErrorMessage } from 'src/helpers/errors.helper';
 import styles from './ArticlePage.module.scss';
+import { isSameDates, renderDateWithTime } from 'src/helpers/dates.helper';
 
 export function ArticlePage() {
     const { articleId } = useParams<ArticleRouteParams>();
@@ -91,6 +92,13 @@ export function ArticlePage() {
                     </div>
                     <Image width={650} height={300} style={{ objectFit: 'cover' }} src={getImageLink(article?.cover)} />
                     <div className={styles.description}>{article?.description}</div>
+                    <div className={styles.dates}>
+                        {article && isSameDates(article?.createdDate, article?.updatedDate) ? (
+                            <span>{renderDateWithTime(article?.createdDate)}</span>
+                        ) : (
+                            <span>Updated in {renderDateWithTime(article?.updatedDate)}</span>
+                        )}
+                    </div>
                     {article && <Editor defaultValue={article.body} readOnly />}
                 </Space>
             </PageContent.Body>

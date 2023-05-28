@@ -15,6 +15,7 @@ export function FeedFilters() {
 
     const onRangeChange = (dates: null | (Dayjs | null)[]) => {
         if (dates && dates[0] && dates[1]) {
+            // TODO Make zero timezone
             handleFilterChange({
                 fromDate: dates[0].startOf('day').toISOString(),
                 endDate: dates[1].endOf('day').toISOString(),

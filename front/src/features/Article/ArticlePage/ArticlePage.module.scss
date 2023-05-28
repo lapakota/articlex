@@ -14,7 +14,14 @@
 
     .description {
         width: 650px;
+    }
+
+    .dates {
+        display: flex;
+        justify-content: flex-end;
+        width: 650px;
         padding-bottom: 16px;
+        color: $secondary-text;
         border-bottom: 1px solid $gray-border;
     }
 }

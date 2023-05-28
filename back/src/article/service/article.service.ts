@@ -115,6 +115,7 @@ export class ArticleService {
     article.title = articleDto.title || article.title;
     article.description = articleDto.description || article.description;
     article.body = articleDto.body || article.body;
+    article.updatedDate = new Date();
 
     await article.save();
     return article;
